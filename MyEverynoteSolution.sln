@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEverynote.WebApp", "MyEverynote.WebApp\MyEverynote.WebApp.csproj", "{939FD622-AA34-49DF-B5C4-F8B591458A89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.BusinessLayer", "MyEvernote.BusinessLayer\MyEvernote.BusinessLayer.csproj", "{74B71AA6-1BF2-41E4-A18E-84368F932F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.DataAccessLayer", "MyEvernote.DataAccessLayer\MyEvernote.DataAccessLayer.csproj", "{D907DF5B-D270-4AC1-84B4-A426FB168CE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEvernote.Entities", "MyEvernote.Entities\MyEvernote.Entities.csproj", "{D2565627-C07D-4653-932C-64CD5B17CEA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{939FD622-AA34-49DF-B5C4-F8B591458A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{939FD622-AA34-49DF-B5C4-F8B591458A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{939FD622-AA34-49DF-B5C4-F8B591458A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B71AA6-1BF2-41E4-A18E-84368F932F89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B71AA6-1BF2-41E4-A18E-84368F932F89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B71AA6-1BF2-41E4-A18E-84368F932F89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B71AA6-1BF2-41E4-A18E-84368F932F89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D907DF5B-D270-4AC1-84B4-A426FB168CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D907DF5B-D270-4AC1-84B4-A426FB168CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D907DF5B-D270-4AC1-84B4-A426FB168CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D907DF5B-D270-4AC1-84B4-A426FB168CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2565627-C07D-4653-932C-64CD5B17CEA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2565627-C07D-4653-932C-64CD5B17CEA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2565627-C07D-4653-932C-64CD5B17CEA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2565627-C07D-4653-932C-64CD5B17CEA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
