@@ -44,6 +44,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="EvernoteUser.cs" />
+    <Compile Include="Liked.cs" />
     <Compile Include="MyEntityBase.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

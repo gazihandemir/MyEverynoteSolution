@@ -18,5 +18,6 @@ namespace MyEvernote.Entities
         public bool IsAdmin{ get; set; }
         public virtual List<Note> Notes { get; set; }
         public virtual List<Comment> Comments { get; set; }
+        public virtual List<Liked> Likes { get; set; }
     }
 }
