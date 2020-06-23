@@ -16,5 +16,9 @@ namespace MyEvernote.Entities
         [StringLength(150)]
         public string Description{ get; set; }
         public virtual List<Note> Notes{ get; set; }
+        public Category()
+        {
+            Notes = new List<Note>();
+        }
     }
 }
