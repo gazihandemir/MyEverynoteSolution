@@ -12,6 +12,7 @@ namespace MyEvernote.DataAccessLayer
     {
         protected override void Seed(DatabaseContext context)
         {
+            //Adding admin user
             EvernoteUser admin = new EvernoteUser()
             {
                 Name = "Gazihan",
@@ -27,6 +28,7 @@ namespace MyEvernote.DataAccessLayer
                 ModifiedUserName = "gazihandemir"
 
             };
+            //Adding standart user
             EvernoteUser standartUser = new EvernoteUser()
             {
                 Name = "Cansu",
@@ -43,6 +45,24 @@ namespace MyEvernote.DataAccessLayer
             };
             context.EvernoteUsers.Add(admin);
             context.EvernoteUsers.Add(standartUser);
+            for(int i = 0; i < 8; i++)
+            {
+                EvernoteUser user = new EvernoteUser()
+                {
+                    Name = FakeData.NameData.GetFirstName(),
+                    Surname = FakeData.NameData.GetSurname(),
+                    Email = FakeData.NetworkData.GetEmail(),
+                    ActivateGuid = Guid.NewGuid(),
+                    IsActive = true,
+                    IsAdmin = false,
+                    UserName = $"user{i}",
+                    Password = "123",
+                    CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+                    ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+                    ModifiedUserName = $"user{i}"
+                };
+                context.EvernoteUsers.Add(user);
+            }
             context.SaveChanges();
             // adding fake categories
             for(int i = 0; i < 10; i++)
@@ -55,8 +75,8 @@ namespace MyEvernote.DataAccessLayer
                     ModifiedOn = DateTime.Now,
                     ModifiedUserName = "gazihandemir"
                 };
-
-                for(int k = 0;k< FakeData.NumberData.GetNumber(5, 10); k++)
+                // adding fake notes
+                for (int k = 0;k< FakeData.NumberData.GetNumber(5, 10); k++)
                 {
                     Note note = new Note()
                     {
@@ -71,6 +91,20 @@ namespace MyEvernote.DataAccessLayer
                         ModifiedUserName = (k % 2 == 0) ? admin.UserName : standartUser.UserName
                     };
                     cat.Notes.Add(note);
+                    // Adding fake comments
+                    for(int j = 0;j<FakeData.NumberData.GetNumber(3,5); j++)
+                    {
+                        Comment comment = new Comment()
+                        {
+                            Text = FakeData.TextData.GetSentence(),
+                            Note = note,
+                            Owner = (j % 2 == 0) ? admin : standartUser,
+                            CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+                            ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+                            ModifiedUserName = (j % 2 == 0) ? admin.UserName : standartUser.UserName
+                        };
+                        note.Comments.Add(comment);
+                    }
                 }
             }
         }
