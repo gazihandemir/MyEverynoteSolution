@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer
 {
-    class DatabaseContext : DbContext
+   public class DatabaseContext : DbContext
     {
         public DbSet<EvernoteUser> EvernoteUsers { get; set; }
         public DbSet<Note> Notes { get; set; }

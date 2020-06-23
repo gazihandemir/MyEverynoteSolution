@@ -11,6 +11,8 @@ namespace MyEverynote.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            MyEvernote.BusinessLayer.test test = new MyEvernote.BusinessLayer.test();
+
             return View();
         }
     }
