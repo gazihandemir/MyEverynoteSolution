@@ -64,8 +64,10 @@ namespace MyEvernote.DataAccessLayer
                 context.EvernoteUsers.Add(user);
             }
             context.SaveChanges();
+            // User list for using
+            List<EvernoteUser> userlist = context.EvernoteUsers.ToList();
             // adding fake categories
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Category cat = new Category()
                 {
@@ -79,35 +81,35 @@ namespace MyEvernote.DataAccessLayer
                 // adding fake notes
                 for (int k = 0;k< FakeData.NumberData.GetNumber(5, 10); k++)
                 {
+                    EvernoteUser owner = userlist[FakeData.NumberData.GetNumber(0, userlist.Count - 1)];
                     Note note = new Note()
                     {
                         Title = FakeData.TextData.GetAlphabetical(FakeData.NumberData.GetNumber(5, 25)),
                         Text = FakeData.TextData.GetSentences(FakeData.NumberData.GetNumber(1, 3)),
-                        Category = cat,
                         IsDraft = false,
                         LikeCount = FakeData.NumberData.GetNumber(1, 9),
-                        Owner = (k % 2 == 0) ? admin : standartUser,
+                        Owner = owner,
                         CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1),DateTime.Now),
                         ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1),DateTime.Now),
-                        ModifiedUserName = (k % 2 == 0) ? admin.UserName : standartUser.UserName
+                        ModifiedUserName = owner.UserName
                     };
                     cat.Notes.Add(note);
                     // Adding fake comments
                     for(int j = 0;j<FakeData.NumberData.GetNumber(3,5); j++)
                     {
+                        EvernoteUser comment_owner = userlist[FakeData.NumberData.GetNumber(0, userlist.Count - 1)];
                         Comment comment = new Comment()
                         {
                             Text = FakeData.TextData.GetSentence(),
-                            Note = note,
-                            Owner = (j % 2 == 0) ? admin : standartUser,
+                            Owner = comment_owner,
                             CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                             ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
-                            ModifiedUserName = (j % 2 == 0) ? admin.UserName : standartUser.UserName
+                            ModifiedUserName = comment_owner.UserName
                         };
                         note.Comments.Add(comment);
                     }
                     // Adding fake Likes
-                    List<EvernoteUser> userlist = context.EvernoteUsers.ToList();
+                
                     for (int m = 0; m < note.LikeCount ; m++) 
                     {
                         Liked liked = new Liked()
