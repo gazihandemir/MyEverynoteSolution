@@ -75,6 +75,7 @@ namespace MyEvernote.DataAccessLayer
                     ModifiedOn = DateTime.Now,
                     ModifiedUserName = "gazihandemir"
                 };
+                context.Categories.Add(cat);
                 // adding fake notes
                 for (int k = 0;k< FakeData.NumberData.GetNumber(5, 10); k++)
                 {
@@ -84,7 +85,7 @@ namespace MyEvernote.DataAccessLayer
                         Text = FakeData.TextData.GetSentences(FakeData.NumberData.GetNumber(1, 3)),
                         Category = cat,
                         IsDraft = false,
-                        LikeCount = FakeData.NumberData.GetNumber(10, 50),
+                        LikeCount = FakeData.NumberData.GetNumber(1, 9),
                         Owner = (k % 2 == 0) ? admin : standartUser,
                         CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1),DateTime.Now),
                         ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1),DateTime.Now),
@@ -105,8 +106,20 @@ namespace MyEvernote.DataAccessLayer
                         };
                         note.Comments.Add(comment);
                     }
+                    // Adding fake Likes
+                    List<EvernoteUser> userlist = context.EvernoteUsers.ToList();
+                    for (int m = 0; m < note.LikeCount ; m++) 
+                    {
+                        Liked liked = new Liked()
+                        {
+                            LikedUser = userlist[m]
+
+                        };
+                        note.Likes.Add(liked);
+                    }
                 }
             }
+            context.SaveChanges();
         }
         public override void InitializeDatabase(DatabaseContext context)
         {
