@@ -13,6 +13,8 @@ namespace MyEverynote.WebApp.Controllers
         {
             MyEvernote.BusinessLayer.test test = new MyEvernote.BusinessLayer.test();
 
+            //test.InsertTest();
+            test.UpdateTest();
             return View();
         }
     }
