@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.BusinessLayer
 {
-    public class Repository<T> where T : class // T tipi class olmak zorunda
+    public class Repository<T> : RepositoryBase where T : class // T tipi class olmak zorunda
     {
-        private DatabaseContext db = new DatabaseContext();
+        //private DatabaseContext db = new DatabaseContext();
         private DbSet<T> _objectSet;
         public Repository()
         {
-            _objectSet = db.Set<T>();
+            _objectSet = context.Set<T>();
         }
         public List<T> List()
         {
@@ -42,7 +42,7 @@ namespace MyEvernote.BusinessLayer
         }
         public int Save()
         {
-            return db.SaveChanges();
+            return context.SaveChanges();
         }
         public T Find(Expression<Func<T, bool>> where)
         {
