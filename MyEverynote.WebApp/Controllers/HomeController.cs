@@ -1,5 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,11 +57,34 @@ namespace MyEverynote.WebApp.Controllers
         {
             return View();
         }
-        public ActionResult Logout()
+        [HttpPost]
+        public ActionResult Login(LoginViewModel model)
+        {
+            // Giriş kontrolü ve yönlendirme
+            // Session'a kullanıcı bilgi saklama
+            return View();
+        }
+     
+        public ActionResult Register()
         {
             return View();
         }
-        public ActionResult Register()
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            // Kullanıcı username kontrolü
+            // Kullanıcı eposta kontrolü
+            // Kayıt işlemi
+            // Aktivasyon e postası gönderimi
+            return View();
+        }
+        public ActionResult UserActivate(Guid activate_id)
+        {
+            // Kullanıcı aktivasyonu saglanacak 
+
+            return View();
+        }
+        public ActionResult Logout()
         {
             return View();
         }

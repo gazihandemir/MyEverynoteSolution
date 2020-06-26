@@ -9,9 +9,10 @@ namespace MyEverynote.WebApp.ViewModels
 {
     public class LoginViewModel
     {
-        [DisplayName("Kullanıcı Adı") ,Required(ErrorMessage ="{0} alanı boş geçilemez.")]
+        [DisplayName("Kullanıcı Adı"), Required(ErrorMessage = "{0} alanı boş geçilemez."),
+             StringLength(25, ErrorMessage = "{0} max {1} karakter olmalı")]
         public string Username { get; set; }
-        [DisplayName("Şifre"), Required(ErrorMessage = "{1} alanı boş geçilemez."),DataType(DataType.Password)]
+        [DisplayName("Şifre"), Required(ErrorMessage = "{0} alanı boş geçilemez."),DataType(DataType.Password), StringLength(25, ErrorMessage = "{0} max {1} karakter olmalı")]
         public string Password { get; set; }
     }
 }
