@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyEvernote.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,13 +12,13 @@ namespace MyEverynote.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            MyEvernote.BusinessLayer.test test = new MyEvernote.BusinessLayer.test();
-
+            // MyEvernote.BusinessLayer.test test = new MyEvernote.BusinessLayer.test();
             //test.InsertTest();
             // test.UpdateTest();
             // test.DeleteTest();
-            test.commentTest();
-            return View();
+            //test.commentTest();
+            NoteManager nm = new NoteManager();
+            return View(nm.getAllNote());
         }
     }
 }

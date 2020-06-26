@@ -1,4 +1,5 @@
-﻿
+﻿@using MyEvernote.Entities
+@model List<Note>
 @{
     ViewBag.Title = "Index";
 }
@@ -45,190 +46,56 @@
                 </div>
 
             </div>
-            <!-- Yazılar-->
+            <!-- Notlar-->
             <div class="row">
+                @foreach (Note note in Model)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="http://placehold.it/320x150" alt="@note.Title">
+                            <div class="caption">
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
+                                <h4>
+                                    <a href="#"> @note.Title</a>
+                                </h4>
+                                <h6 class="text-right">
+                                     @note.Owner.UserName <span class="glyphicon glyphicon-user"></span> <br /><br />
+                                    @note.ModifiedOn.ToString("dd.MM.yy HH:mm") <span class="glyphicon glyphicon-time"></span>
+                                </h6>
 
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
 
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
+                                @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 60)
+                                {
+                                    <p>
+                                        @(note.Text.Substring(0, 60) + "...")
+                                    </p>
+                                    <p>
+                                <a href="#" class="btn btn-default btn-sm" >devamı</a> <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>@note.Text</p>
+                                }
 
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
 
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
+                            </div>
+                            <div><hr /></div>
+                            <div class="ratings">
+                                <p class="pull-right">
+                                    <button class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-comment"></span> Yorumlar
+                                    </button>
+                                </p>
+                                <p>
+                                    <button class="btn btn-default btn-sm" type="button">
+                                        <span class="glyphicon glyphicon-star-empty"></span> @note.LikeCount
+                                    </button>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
-
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
-
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
-
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-
-                            <h4>
-                                <a href="#">sit amet, consectetur.</a>
-                            </h4>
-
-                            <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span> Gazihan DEMİR <hr />
-                                <span class="glyphicon glyphicon-time"></span> 01.01.2020 13:34 <hr />
-                            </h6>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                </button>
-                            </p>
-                            <p>
-                                <button class="btn btn-default btn-sm" type="button">
-                                    <span class="glyphicon glyphicon-star-empty"></span> 15
-                                </button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
+                }
 
             </div>
 
