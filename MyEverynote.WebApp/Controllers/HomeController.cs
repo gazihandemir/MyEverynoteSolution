@@ -52,5 +52,18 @@ namespace MyEverynote.WebApp.Controllers
         {
             return View();
         }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            return View();
+        }
+        public ActionResult Register()
+        {
+            return View();
+        }
+
     }
 }
