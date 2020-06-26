@@ -23,7 +23,8 @@ namespace MyEverynote.WebApp.Controllers
                   return View(TempData["mm"] as List<Note>);
               }*/
             NoteManager nm = new NoteManager();
-            return View(nm.getAllNote());
+            return View(nm.getAllNote().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
+          // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
         }
         public ActionResult ByCategory(int? id)
         {
@@ -38,8 +39,18 @@ namespace MyEverynote.WebApp.Controllers
                 return HttpNotFound();
                 //return RedirectToAction("Index", "Home");
             }
-            return View("Index", cat.Notes);
+            return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
+        public ActionResult MostLiked()
+        {
+            NoteManager nm = new NoteManager();
+
+            return View("Index",nm.getAllNote().OrderByDescending(x => x.LikeCount).ToList());
+        }
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

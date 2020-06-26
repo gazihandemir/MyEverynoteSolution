@@ -14,6 +14,9 @@ namespace MyEvernote.BusinessLayer
         public List<Note> getAllNote()
         {
             return repo_note.List();
+        }public IQueryable<Note> getAllNoteQueryable()
+        {
+            return repo_note.ListQueryable();
         }
     }
 }
