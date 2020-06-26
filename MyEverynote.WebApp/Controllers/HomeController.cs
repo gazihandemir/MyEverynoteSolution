@@ -1,4 +1,5 @@
 ﻿using MyEvernote.BusinessLayer;
+using MyEvernote.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,28 @@ namespace MyEverynote.WebApp.Controllers
             // test.UpdateTest();
             // test.DeleteTest();
             //test.commentTest();
+            /*  if(TempData["mm"] != null)
+              {
+                  return View(TempData["mm"] as List<Note>);
+              }*/
             NoteManager nm = new NoteManager();
             return View(nm.getAllNote());
         }
+        public ActionResult ByCategory(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            CategoryManager cm = new CategoryManager();
+            Category cat = cm.getCategoryById(id.Value);
+            if (cat == null)
+            {
+                return HttpNotFound();
+                //return RedirectToAction("Index", "Home");
+            }
+            return View("Index", cat.Notes);
+        }
+
     }
 }
