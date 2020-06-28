@@ -1,6 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
-using MyEverynote.WebApp.ViewModels;
+using MyEvernote.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,9 +72,24 @@ namespace MyEverynote.WebApp.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
+            // Kullanıcı username kontrolü
+            // Kullanıcı eposta kontrolü
+            // Kayıt işlemi
+            // Aktivasyon e postası gönderimi
             if (ModelState.IsValid)
             {
-                if(model.Username == "aaa")
+                EvernoteUserManager eum = new EvernoteUserManager();
+                EvernoteUser user = null;
+                try {
+                    eum.RegisterUser(model);
+                }
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+                   
+             /*   if(model.Username == "aaa")
                 {
                     ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
                 }
@@ -88,16 +103,20 @@ namespace MyEverynote.WebApp.Controllers
                     {
                         return View(model);
                     }
+                }*/
+                if(user == null)
+                {
+                    return View(model);
                 }
-
                 return RedirectToAction("RegisterOk");
 
             }
-            // Kullanıcı username kontrolü
-            // Kullanıcı eposta kontrolü
-            // Kayıt işlemi
-            // Aktivasyon e postası gönderimi
+         
             return View(model);
+        }
+        public ActionResult RegisterOk()
+        {
+            return View();
         }
         public ActionResult UserActivate(Guid activate_id)
         {
