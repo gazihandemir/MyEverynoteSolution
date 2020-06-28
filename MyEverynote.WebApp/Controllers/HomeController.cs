@@ -79,35 +79,44 @@ namespace MyEverynote.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 EvernoteUserManager eum = new EvernoteUserManager();
-                EvernoteUser user = null;
-                try {
-                    eum.RegisterUser(model);
-                }
-                catch(Exception ex)
+                BusinessLayerResult<EvernoteUser> res = eum.RegisterUser(model);
+                if(res.Errors.Count > 0)
                 {
-                    ModelState.AddModelError("", ex.Message);
-                }
-
-                   
-             /*   if(model.Username == "aaa")
-                {
-                    ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
-                }
-                if(model.Email == "aaa@aa.com")
-                {
-                    ModelState.AddModelError("", "e-mail  kullanılıyor.");
-                }
-                foreach (var item in ModelState)
-                {
-                    if(item.Value.Errors.Count > 0)
-                    {
-                        return View(model);
-                    }
-                }*/
-                if(user == null)
-                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x));
                     return View(model);
                 }
+
+                /*   EvernoteUser user = null;
+                   try {
+                       eum.RegisterUser(model);
+                   }
+                   catch(Exception ex)
+                   {
+                       ModelState.AddModelError("", ex.Message);
+                   }
+
+
+
+                /*   if(model.Username == "aaa")
+                   {
+                       ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
+                   }
+                   if(model.Email == "aaa@aa.com")
+                   {
+                       ModelState.AddModelError("", "e-mail  kullanılıyor.");
+                   }
+                   foreach (var item in ModelState)
+                   {
+                       if(item.Value.Errors.Count > 0)
+                       {
+                           return View(model);
+                       }
+                   }
+                   if(user == null)
+                   {
+                       return View(model);
+                   }
+                   */
                 return RedirectToAction("RegisterOk");
 
             }
