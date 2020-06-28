@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "MyEvernote-Kayıt Sayfası";
 }
+    <style>
+        .validation-summary-errors{
+            border:2px dotted #a94442;
+            background-color: #d76663;
+            border-radius:8px;
+        }.validation-summary-errors ul{
+            list-style:none;
+            padding:10px;
+            color:#fff;
+        }
+    </style>
 @using (Html.BeginForm())
 {
     <body>
@@ -14,6 +25,7 @@
                         <div id="login-box" class="col-md-12">
                             <form id="login-form" class="form" action="" method="post">
                                 <h3 class="text-center text-info">KAYIT OL</h3>
+                                <hr /> <br />@Html.ValidationSummary(false) <br /><hr />
                                 <div class="form-group">
                                     <label for="username" class="text-info"><span class="glyphicon glyphicon-user"></span> Kullanıcı Adı</label><br>
                                     @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })

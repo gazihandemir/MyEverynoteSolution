@@ -72,11 +72,32 @@ namespace MyEverynote.WebApp.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                if(model.Username == "aaa")
+                {
+                    ModelState.AddModelError("", "Kullanıcı adı kullanılıyor.");
+                }
+                if(model.Email == "aaa@aa.com")
+                {
+                    ModelState.AddModelError("", "e-mail  kullanılıyor.");
+                }
+                foreach (var item in ModelState)
+                {
+                    if(item.Value.Errors.Count > 0)
+                    {
+                        return View(model);
+                    }
+                }
+
+                return RedirectToAction("RegisterOk");
+
+            }
             // Kullanıcı username kontrolü
             // Kullanıcı eposta kontrolü
             // Kayıt işlemi
             // Aktivasyon e postası gönderimi
-            return View();
+            return View(model);
         }
         public ActionResult UserActivate(Guid activate_id)
         {
