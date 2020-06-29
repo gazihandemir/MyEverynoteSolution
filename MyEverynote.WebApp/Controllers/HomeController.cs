@@ -60,11 +60,29 @@ namespace MyEverynote.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            // Giriş kontrolü ve yönlendirme
-            // Session'a kullanıcı bilgi saklama
-            return View();
+            if (ModelState.IsValid) // Veriler girildiyse ife gir 
+            {
+                EvernoteUserManager eum = new EvernoteUserManager();
+                BusinessLayerResult<EvernoteUser> res = eum.LoginUser(model);
+                // Eğer hata varsa ife gir 
+                if (res.Errors.Count > 0)
+                {
+                    // hata var ise ekrana hataları gönder ve ekranı tekrardan başlat
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x));
+                    // sayfayı yüklee
+                    return View(model);
+                }
+
+                Session["login"] = res.Result;          // Session'a kullanıcı bilgi saklama..
+                return RedirectToAction("Index");       // Yönlendirme
+
+
+
+            }
+            return View(model);
+          
         }
-     
+
         public ActionResult Register()
         {
             return View();

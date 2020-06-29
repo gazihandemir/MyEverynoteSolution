@@ -54,5 +54,27 @@ namespace MyEvernote.BusinessLayer
             }
             return layerResult;
         }
+   
+        public BusinessLayerResult<EvernoteUser> LoginUser(LoginViewModel data)
+        {
+            // Giriş kontrolü
+            // Hesap aktive edilmiş mi ?
+            BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
+            layerResult.Result = repo_user.Find(x => x.UserName == data.Username && x.Password == data.Password);
+
+            if (layerResult.Result != null)
+            {
+                if (!layerResult.Result.IsActive)
+                {
+                    layerResult.Errors.Add("Kullanıcı aktifleştirilmemiştir. Lütfen e-posta adresinizi kontrol ediniz.");
+                } 
+            }
+            else
+            {
+                layerResult.Errors.Add("Kullanıcı adı yada şifre uyuşmuyor.");
+            }
+
+            return layerResult;
+        }
     }
 }
