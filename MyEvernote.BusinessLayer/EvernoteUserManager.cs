@@ -37,8 +37,14 @@ namespace MyEvernote.BusinessLayer
                 {
                     UserName = data.Username,
                     Email = data.Email,
-                    Password = data.Password
-                });
+                    Password = data.Password,
+                    ActivateGuid = Guid.NewGuid(),
+                 
+                    IsActive = false,
+                    IsAdmin = false,
+
+
+               });
                 if(dbResult > 0)
                 {
                     layerResult.Result = repo_user.Find(x => x.Email == data.Email && x.UserName == data.Username);
