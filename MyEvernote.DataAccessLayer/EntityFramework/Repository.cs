@@ -1,4 +1,5 @@
-﻿using MyEvernote.DataAccessLayer;
+﻿using MyEvernote.Common;
+using MyEvernote.DataAccessLayer;
 using MyEvernote.DataAccessLayer.Abstract;
 using MyEvernote.Entities;
 using System;
@@ -40,7 +41,8 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                 DateTime now = DateTime.Now;
                 o.CreatedOn = now;
                 o.ModifiedOn = now;
-                o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+                //o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+                o.ModifiedUserName = App.Common.GetCurrentUsername();
             }
             return Save();
         }
@@ -51,19 +53,21 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                 MyEntityBase o = obj as MyEntityBase;
 
                 o.ModifiedOn = DateTime.Now;
-                o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+              //  o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+                o.ModifiedUserName = App.Common.GetCurrentUsername();
             }
             return Save();
         }
         public int Delete(T obj)
         {
-          /*  if (obj is MyEntityBase)
-            {
-                MyEntityBase o = obj as MyEntityBase;
+            /*  if (obj is MyEntityBase)
+              {
+                  MyEntityBase o = obj as MyEntityBase;
 
-                o.ModifiedOn = DateTime.Now;
-                o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
-            }*/
+                  o.ModifiedOn = DateTime.Now;
+                  o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+                   o.ModifiedUserName = App.Common.getUsername();
+              }*/
             _objectSet.Remove(obj);
             return Save();
         }

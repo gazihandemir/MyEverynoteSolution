@@ -225,6 +225,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +261,10 @@
     <ProjectReference Include="..\MyEvernote.BusinessLayer\MyEvernote.BusinessLayer.csproj">
       <Project>{74b71aa6-1bf2-41e4-a18e-84368f932f89}</Project>
       <Name>MyEvernote.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEvernote.Common\MyEvernote.Common.csproj">
+      <Project>{67d9099c-e634-45d0-8b2d-540768e908bc}</Project>
+      <Name>MyEvernote.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyEvernote.Entities\MyEvernote.Entities.csproj">
       <Project>{d2565627-c07d-4653-932c-64cd5b17cea4}</Project>

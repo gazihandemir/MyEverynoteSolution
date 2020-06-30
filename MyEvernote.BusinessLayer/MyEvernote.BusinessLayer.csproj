@@ -59,6 +59,10 @@
     <Compile Include="test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyEvernote.Common\MyEvernote.Common.csproj">
+      <Project>{67d9099c-e634-45d0-8b2d-540768e908bc}</Project>
+      <Name>MyEvernote.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyEvernote.DataAccessLayer\MyEvernote.DataAccessLayer.csproj">
       <Project>{d907df5b-d270-4ac1-84b4-a426fb168ce4}</Project>
       <Name>MyEvernote.DataAccessLayer</Name>
