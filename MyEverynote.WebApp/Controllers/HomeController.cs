@@ -1,5 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -69,11 +70,13 @@ namespace MyEverynote.WebApp.Controllers
                 {
                     // res.Errors.ForEach(x => ModelState.AddModelError("", x));
                     // hata var ise ekrana hataları gönder ve ekranı tekrardan başlat
-                    res.Errors.ForEach(x => ModelState.AddModelError("",))
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
                     // sayfayı yüklee
 
-                    if ()
-
+                   if(res.Errors.Find(x => x.Code == ErrorMessageCode.UserIsNotActive) != null)
+                    {
+                        ViewBag.SetLink = "E-Posta Gönder";
+                    }
                     return View(model);
                 }
 
@@ -104,7 +107,7 @@ namespace MyEverynote.WebApp.Controllers
                 BusinessLayerResult<EvernoteUser> res = eum.RegisterUser(model);
                 if(res.Errors.Count > 0)
                 {
-                    res.Errors.ForEach(x => ModelState.AddModelError("", x));
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
                     return View(model);
                 }
 
