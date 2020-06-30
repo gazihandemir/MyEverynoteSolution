@@ -67,9 +67,13 @@ namespace MyEverynote.WebApp.Controllers
                 // Eğer hata varsa ife gir 
                 if (res.Errors.Count > 0)
                 {
+                    // res.Errors.ForEach(x => ModelState.AddModelError("", x));
                     // hata var ise ekrana hataları gönder ve ekranı tekrardan başlat
-                    res.Errors.ForEach(x => ModelState.AddModelError("", x));
+                    res.Errors.ForEach(x => ModelState.AddModelError("",))
                     // sayfayı yüklee
+
+                    if ()
+
                     return View(model);
                 }
 
