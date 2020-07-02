@@ -70,10 +70,11 @@ namespace MyEvernote.BusinessLayer
                     // TODO : activasyon maili atılacak.
                     // layerResult.Result.ActivateGuid
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
-                    string activateUri = $"{siteUri}/Home/UserActivate/{user.ActivateGuid}";
-                    string body = $"Merhaba {user.Name} {user.Surname};<br><br> Kesabınızı aktifleştirmek için <a href =' {activateUri}' " +
+                    string activateUri = $"{siteUri}/Home/UserActivate/{layerResult.Result.ActivateGuid}";
+                    string body = $"Merhaba {layerResult.Result.UserName};<br><br> Kesabınızı aktifleştirmek için <a href =' {activateUri}' " +
                         $"target='_blank'>tıklayınız.</a>";
-                    MailHelper.SendMail(body,user.Email,"MyEvernote Hesap Aktifleştirme",true);
+                    MailHelper.SendMail(body, layerResult.Result.Email,"MyEvernote Hesap Aktifleştirme",true);
+                    // https://support.google.com/accounts/answer/6010255?hl=tr 
                 }
             }
             return layerResult;

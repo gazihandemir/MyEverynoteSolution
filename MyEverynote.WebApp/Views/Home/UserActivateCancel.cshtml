@@ -1,7 +1,7 @@
-﻿@using MyEvernote.Entities.ValueObjects
-@model RegisterViewModel
+﻿@using MyEvernote.Entities.Messages
+@model List<ErrorMessageObj>
 @{
-    ViewBag.Title = "Hesap Geçersiz";
+    ViewBag.Title = "Geçersiz işlem";
 }
 <style>
     .validation-summary-errors {
@@ -25,12 +25,15 @@
                     <br /><br /><br /> <h1 class="text-center">YÖNLENDİRİLİYORSUNUZ... </h1> <br /><br /><br />
                 </div>
                 <div class="main-content">
-                    <div class="text-success">
-                        <h2><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;&nbsp;Hesap geçerli değil</h2>
+                    <div class="text-danger">
+                        <h2><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Hesap geçerli değil</h2>
                         <hr />
                         <p class="text-justify">
                             <h3 class="text-center">
-                                
+                                @foreach (ErrorMessageObj err in Model)
+                                {
+                                        @err.Message<br>
+                                }
                             </h3>
 
                         </p>
