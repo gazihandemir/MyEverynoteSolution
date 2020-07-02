@@ -9,20 +9,21 @@ using System.Threading.Tasks;
 namespace MyEvernote.Entities
 {
     [Table("Notes")]
-   public class Note : MyEntityBase
+   public class Note : MyEntityBase  // MyentityBase'den Id,DateTime CreatedOn,DateTime ModifiedOn, ModifiedUserName geliyor
     {
         [Required,StringLength(60)]
-        public string Title { get; set; }
+        public string Title { get; set; } // notun başlığı
         [Required,StringLength(2000)]
-        public string Text { get; set; }
-        public bool IsDraft { get; set; }
-        public int  LikeCount{ get; set; }
-        public int CategoryId { get; set; }
-        public virtual EvernoteUser Owner { get; set; }
-        public virtual List<Comment> Comments { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual List<Liked> Likes{ get; set; }
+        public string Text { get; set; } // notun içeriği
+        public bool IsDraft { get; set; } // not taslak mı ? 
+        public int  LikeCount{ get; set; } // Begeni sayısı
+        public int CategoryId { get; set; } // Hangi kategoriye bağlı olduğunu anlamak için id
+        public virtual EvernoteUser Owner { get; set; } // Hangi kullanıcıya(owner(sahibi)) ait
+        public virtual List<Comment> Comments { get; set; } // Notun yorumları(list)
+        public virtual Category Category { get; set; } // Notun kategorisi
+        public virtual List<Liked> Likes{ get; set; } // Notun beğenileri
         public Note()
+            // CTOR oluştuğunda Yorum ve beğenme listeleri oluşsun
         {
             Comments = new List<Comment>();
             Likes = new List<Liked>();

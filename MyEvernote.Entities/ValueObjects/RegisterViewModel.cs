@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MyEvernote.Entities.ValueObjects
 {
+    // Register sayfasındaki prop'ların kurallarını tanımlıyoruz .
     public class RegisterViewModel
     {
         [DisplayName("Kullanıcı Adı"),

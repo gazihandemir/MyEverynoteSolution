@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace MyEvernote.Entities
 {
     [Table("Comments")]
-    public class Comment : MyEntityBase
+    public class Comment : MyEntityBase // MyentityBase'den Id,DateTime CreatedOn,DateTime ModifiedOn, ModifiedUserName geliyor
     {
         [Required,StringLength(300)]
-        public string Text { get; set; }
-        public virtual Note Note { get; set; }
-        public virtual EvernoteUser Owner { get; set; }
+        public string Text { get; set; } // Yorumun içeriği
+        public virtual Note Note { get; set; } // yorumun notu
+        public virtual EvernoteUser Owner { get; set; } // yorumun sahibi
     }
 }

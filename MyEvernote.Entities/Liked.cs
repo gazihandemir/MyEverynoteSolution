@@ -11,9 +11,10 @@ namespace MyEvernote.Entities
     [Table("Likes")]
     public class Liked
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public Note Note { get; set; }
-        public EvernoteUser LikedUser { get; set; }
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Anahtar , veritabanı oluşurken anahtar şeklinde oluşturulsun
+        // Yani otomatik artan 
+        public int Id { get; set; } // Begeninin ıd'si
+        public Note Note { get; set; } // Begeninin notu
+        public EvernoteUser LikedUser { get; set; } // Begeninin sahibi
     }
 }
