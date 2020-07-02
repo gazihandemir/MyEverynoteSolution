@@ -8,6 +8,7 @@ using MyEvernote.Entities;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
+    // Fake datalar ile verilerimizi veritabanına örnek olarak ekliyoruz
     public class MyInitializer : CreateDatabaseIfNotExists<DatabaseContext>
     {
         protected override void Seed(DatabaseContext context)

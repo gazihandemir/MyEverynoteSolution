@@ -18,20 +18,21 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
         private DbSet<T> _objectSet;
         public Repository()
         {
-            _objectSet = context.Set<T>();
+            // CTOR oluşunca veritabanına set işlemi açılsın.
+            _objectSet = context.Set<T>(); 
         }
-        public List<T> List()
+        public List<T> List() // Listeleme işlemi 
         {
             return _objectSet.ToList();
-        }public IQueryable<T> ListQueryable()
+        }public IQueryable<T> ListQueryable() // Listeleme işlemi  
         {
             return _objectSet.AsQueryable<T>();
         }
-        public List<T> List(Expression<Func<T,bool>> where)
+        public List<T> List(Expression<Func<T,bool>> where) // Listeleme işlemi 
         {
             return _objectSet.Where(where).ToList();
         }
-        public int Insert(T obj)
+        public int Insert(T obj) // Ekleme işlemi 
         {
             _objectSet.Add(obj);
             if(obj is MyEntityBase)
@@ -41,12 +42,12 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                 DateTime now = DateTime.Now;
                 o.CreatedOn = now;
                 o.ModifiedOn = now;
-                //o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adu yazılmalı..
+                //o.ModifiedUserName = "system"; // TODO : İşlem yapan kullanıcı adı yazılmalı..
                 o.ModifiedUserName = App.Common.GetCurrentUsername();
             }
             return Save();
         }
-        public int Update(T obj)
+        public int Update(T obj) // Güncelleme işlemi 
         {
             if (obj is MyEntityBase)
             {
@@ -58,7 +59,7 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
             }
             return Save();
         }
-        public int Delete(T obj)
+        public int Delete(T obj) // Silme işlemi 
         {
             /*  if (obj is MyEntityBase)
               {
@@ -71,11 +72,11 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
             _objectSet.Remove(obj);
             return Save();
         }
-        public int Save()
+        public int Save() // Kaydetme işlemi
         {
             return context.SaveChanges();
         }
-        public T Find(Expression<Func<T, bool>> where)
+        public T Find(Expression<Func<T, bool>> where) // Bulma işlemi
         {
             return _objectSet.FirstOrDefault(where);
         }

@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer.Abstract
 {
-   public interface IRepository<T>
+    // EntityFramework , Sql yada lazım olduğunda başka bir şekle çalışmak için oluşturulmuş İNTERFACE
+    public interface IRepository<T>
     {
-         List<T> List();
-        IQueryable<T> ListQueryable();
-         List<T> List(Expression<Func<T, bool>> where);
-         int Insert(T obj);
-         int Update(T obj);
-         int Delete(T obj);
-         int Save();
-         T Find(Expression<Func<T, bool>> where);
+         List<T> List(); // listeleme
+        IQueryable<T> ListQueryable(); // listeleme
+         List<T> List(Expression<Func<T, bool>> where); // Listeleme
+         int Insert(T obj); // ekleme
+         int Update(T obj); // güncelleme
+         int Delete(T obj); // silme
+         int Save(); // kaydetme 
+         T Find(Expression<Func<T, bool>> where); // bulma
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer.MySql
 {
-   public class RepositoryBase
+    // SQL kullanacağımız zaman hazır bulunan ve düzenlenmemiş sınıfımız.
+    public class RepositoryBase
     { 
    
     }

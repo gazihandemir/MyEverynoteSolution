@@ -9,6 +9,7 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
 {
    public class RepositoryBase
     {
+        // Singleton
         protected static DatabaseContext context;
         private static object _lockSync = new object();
         protected RepositoryBase()

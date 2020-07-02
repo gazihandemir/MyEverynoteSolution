@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
    public class DatabaseContext : DbContext
+        // Veri tabanımıza kaydedeceğimiz tüm verilerimizin başlıkları
     {
-        public DbSet<EvernoteUser> EvernoteUsers { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Liked> Likes { get; set; }
+        public DbSet<EvernoteUser> EvernoteUsers { get; set; } // Kullanıcılar
+        public DbSet<Note> Notes { get; set; } // Kullanıcıların yazdığı notlar
+        public DbSet<Comment> Comments { get; set; } //  Kullanıcıların yazdığı yorumlar
+        public DbSet<Category> Categories { get; set; } // Kategoriler
+        public DbSet<Liked> Likes { get; set; } // Kullanıcıların yazdığı notlar için beğenmeler
         public DatabaseContext()
         {
             Database.SetInitializer(new MyInitializer());

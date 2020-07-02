@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer.MySql
 {
+    // SQL kullanacağımız zaman hazır bulunan ve düzenlenmemiş sınıfımız.
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class
     {
         public int Delete(T obj)
