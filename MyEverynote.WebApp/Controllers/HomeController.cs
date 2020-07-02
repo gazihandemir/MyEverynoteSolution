@@ -25,29 +25,38 @@ namespace MyEverynote.WebApp.Controllers
                   return View(TempData["mm"] as List<Note>);
               }*/
             NoteManager nm = new NoteManager();
+            // Değiştirilme zamanına göre bütün notların listelenmesi
             return View(nm.getAllNote().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
           // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
         }
         public ActionResult ByCategory(int? id)
         {
+            // Kategorideki id yoksa hata döndür.
             if (id == null)
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
             CategoryManager cm = new CategoryManager();
+            // Category id bulma
             Category cat = cm.getCategoryById(id.Value);
+            // id yoksa hata döndür
             if (cat == null)
             {
                 return HttpNotFound();
                 //return RedirectToAction("Index", "Home");
             }
+            // Kategorileri değiştirilme tarihine göre sırala 
             return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult MostLiked()
         {
+            /*
+                 CategoryManager cm = new CategoryManager();  // cshtml sayfasının içinde bulunan c# kodları
+                List<Category> list = cm.getCategories();
+             */
             NoteManager nm = new NoteManager();
-
+            // En Beğenilenler'e tıklanıldıgında notlar begeni sayısına göre sıralansın
             return View("Index",nm.getAllNote().OrderByDescending(x => x.LikeCount).ToList());
         }
         public ActionResult About()
