@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.BusinessLayer
 {
+    // Bazı testler için oluşturulmuş class..
     public class test
     {
         private Repository<EvernoteUser> repo_user = new Repository<EvernoteUser>();
@@ -24,7 +25,7 @@ namespace MyEvernote.BusinessLayer
             //  List<Category> categories_filtered = repo_category.List(x => x.Id > 5);
 
         }
-        public void InsertTest()
+  /*      public void InsertTest()
         {
 
             int result = repo_user.Insert(new EvernoteUser()
@@ -73,6 +74,6 @@ namespace MyEvernote.BusinessLayer
                 Owner = user
             };
             repo_comment.Insert(comment);
-        }
+        } */
     }
 }

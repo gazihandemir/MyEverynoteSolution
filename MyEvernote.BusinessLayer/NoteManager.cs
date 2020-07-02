@@ -10,7 +10,9 @@ namespace MyEvernote.BusinessLayer
 {
   public class NoteManager
     {
+        // Data AccessLayerdaki Repository<T(Generic class)> nesnemizi(Note) oluşturuyoruz.
         private Repository<Note> repo_note = new Repository<Note>();
+        // Notları liste şeklinde geri dönmek için oluşturulmuş birbiri ile aynı işlevede 2 fonksiyon.
         public List<Note> getAllNote()
         {
             return repo_note.List();
