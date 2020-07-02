@@ -1,0 +1,52 @@
+﻿@using MyEvernote.Entities.ValueObjects
+@model RegisterViewModel
+@{
+    ViewBag.Title = "Hesap Geçersiz";
+}
+<style>
+    .validation-summary-errors {
+        border: 2px dotted #a94442;
+        background-color: #d76663;
+        border-radius: 8px;
+    }
+
+        .validation-summary-errors ul {
+            list-style: none;
+            padding: 10px;
+            color: #fff;
+        }
+</style>
+@using (Html.BeginForm())
+{
+    <section class="login-info">
+        <div class="container">
+            <div class="row main">
+                <div class="form-header">
+                    <br /><br /><br /> <h1 class="text-center">YÖNLENDİRİLİYORSUNUZ... </h1> <br /><br /><br />
+                </div>
+                <div class="main-content">
+                    <div class="text-success">
+                        <h2><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;&nbsp;Hesap geçerli değil</h2>
+                        <hr />
+                        <p class="text-justify">
+                            <h3 class="text-center">
+                                
+                            </h3>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<script>
+    $(function () {
+        $("footer").parent().hide(); // Sayfa açılınca footer gözükmesin
+        setTimeout(function () {
+            window.location = "/Home/Index";
+        }, 10000);
+    });
+
+</script>

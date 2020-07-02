@@ -1,4 +1,5 @@
-﻿using MyEvernote.DataAccessLayer.EntityFramework;
+﻿using MyEvernote.Common.Helpers;
+using MyEvernote.DataAccessLayer.EntityFramework;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
@@ -68,6 +69,11 @@ namespace MyEvernote.BusinessLayer
                     layerResult.Result = repo_user.Find(x => x.Email == data.Email && x.UserName == data.Username);
                     // TODO : activasyon maili atılacak.
                     // layerResult.Result.ActivateGuid
+                    string siteUri = ConfigHelper.Get<string>("SiteRootUri");
+                    string activateUri = $"{siteUri}/Home/UserActivate/{user.ActivateGuid}";
+                    string body = $"Merhaba {user.Name} {user.Surname};<br><br> Kesabınızı aktifleştirmek için <a href =' {activateUri}' " +
+                        $"target='_blank'>tıklayınız.</a>";
+                    MailHelper.SendMail(body,user.Email,"MyEvernote Hesap Aktifleştirme",true);
                 }
             }
             return layerResult;
@@ -100,6 +106,26 @@ namespace MyEvernote.BusinessLayer
                // layerResult.Errors.Add("Kullanıcı adı yada şifre uyuşmuyor.");
             }
 
+            return layerResult;
+        }
+        public BusinessLayerResult<EvernoteUser> ActivateUser(Guid activateId)
+        {
+            BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
+            layerResult.Result = repo_user.Find(x => x.ActivateGuid == activateId);
+            if(layerResult.Result != null)
+            {
+                if (layerResult.Result.IsActive)
+                {
+                    layerResult.AddError(ErrorMessageCode.UserAlreadyActive, "Kullanıcı zaten aktif edilmiştir.");
+                    return layerResult;
+                }
+                layerResult.Result.IsActive = true;
+                repo_user.Update(layerResult.Result);
+            }
+            else
+            {
+                layerResult.AddError(ErrorMessageCode.ActivateIdDoesNotExists, "Aktifleştirecek kullanıcı bulunamadı.");
+            }
             return layerResult;
         }
     }

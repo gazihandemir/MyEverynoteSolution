@@ -163,9 +163,31 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult UserActivate(Guid activate_id)
         {
+            EvernoteUserManager eum = new EvernoteUserManager();
+           BusinessLayerResult<EvernoteUser> res = eum.ActivateUser(activate_id);
+            if(res.Errors.Count > 0)
+            {
+                TempData["errors"] = res.Errors;
+                return RedirectToAction("UserActivateCancel");
+            } 
+
             // Kullanıcı aktivasyonu saglanacak 
 
             return View();
+        } 
+        public ActionResult UserActivateOk(Guid activate_id)
+        {
+            return View();
+        }
+        public ActionResult UserActivateCancel(Guid activate_id)
+        {
+            List<ErrorMessageObj> errors = null;
+            if (TempData["errors"] != null)
+            {
+               errors = TempData["errors"] as List<ErrorMessageObj>;
+            }    
+
+            return View(errors);
         }
         public ActionResult Logout()
         {
