@@ -56,6 +56,7 @@ namespace MyEvernote.BusinessLayer
                 {
                     UserName = data.Username, 
                     Email = data.Email,
+                    ProfileImageFilename="user.jpg",
                     Password = data.Password,
                     ActivateGuid = Guid.NewGuid(), // Rastgele aktivasyon kodu gönderme 
                  

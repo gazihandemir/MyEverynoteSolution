@@ -19,7 +19,8 @@ namespace MyEverynote.WebApp.ViewModels
             Title = "Geçersiz işlem !";
             IsRedirecting = true;
             RedirectingUrl = "/Home/Index";
-            TimeoutException = 1000;
+            RedirectingTimeout = 1000;
+            Items = new List<T>();
 
         }
     }

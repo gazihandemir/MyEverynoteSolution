@@ -1,7 +1,6 @@
-﻿@using MyEvernote.Entities.Messages
-@model List<ErrorMessageObj>
+﻿@model MyEverynote.WebApp.ViewModels.OkViewModel
 @{
-    ViewBag.Title = "Geçersiz işlem";
+    ViewBag.Title = Model.Title;
 }
 <style>
     .validation-summary-errors {
@@ -22,17 +21,17 @@
         <div class="container">
             <div class="row main">
                 <div class="form-header">
-                    <br /><br /><br /> <h1 class="text-center">YÖNLENDİRİLİYORSUNUZ... </h1> <br /><br /><br />
+                    <br /><br /><br /> <h1 class="text-center">@Model.Header </h1> <br /><br /><br />
                 </div>
                 <div class="main-content">
-                    <div class="text-danger">
-                        <h2><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;Hesap geçerli değil</h2>
+                    <div class="text-success">
+                        <h2 class="text-center"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp;&nbsp;@Model.Title</h2>
                         <hr />
                         <p class="text-justify">
                             <h3 class="text-center">
-                                @foreach (ErrorMessageObj err in Model)
+                                @foreach (string msg in Model.Items)
                                 {
-                                        @err.Message<br>
+                                    @msg<br>
                                 }
                             </h3>
 
@@ -43,13 +42,19 @@
         </div>
     </section>
 }
-
+@{ 
+    string js = string.Empty;
+    if (Model.IsRedirecting)
+    {
+        js =" setTimeout(function () { window.location = '" + Model.RedirectingUrl + "'; }," +
+                    " " + Model.RedirectingTimeout + ");";
+    }
+}
 <script>
     $(function () {
         $("footer").parent().hide(); // Sayfa açılınca footer gözükmesin
-        setTimeout(function () {
-            window.location = "/Home/Index";
-        }, 10000);
+       // setTimeout(function () { window.location = "/Home/Index"; }, 10000);
+        @Html.Raw(js); // stringi herşeyiyle ekle tırnak vb ... 
     });
 
 </script>
