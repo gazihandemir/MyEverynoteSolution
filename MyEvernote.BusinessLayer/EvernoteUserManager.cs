@@ -79,6 +79,9 @@ namespace MyEvernote.BusinessLayer
             }
             return layerResult;
         }
+
+      
+
         // Kullanıcı giriş yap 
         public BusinessLayerResult<EvernoteUser> LoginUser(LoginViewModel data)
         {
@@ -128,6 +131,16 @@ namespace MyEvernote.BusinessLayer
                 layerResult.AddError(ErrorMessageCode.ActivateIdDoesNotExists, "Aktifleştirecek kullanıcı bulunamadı.");
             }
             return layerResult;
+        }
+        public BusinessLayerResult<EvernoteUser> getUserBuId(int id)
+        {
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = repo_user.Find(x => x.Id == id);
+            if(res.Result == null)
+            {
+                res.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı bulunamadı");
+            }
+            return res;
         }
     }
 }

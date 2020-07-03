@@ -21,6 +21,8 @@ namespace MyEvernote.Entities
         public string  Email { get; set; }  // Kullanıcının E-postası
         [StringLength(25),Required]
         public string  Password { get; set; }  // Kullanıcının şifresi
+        [StringLength(30)] // /images/user_12.jpg
+        public string ProfileImageFilename { get; set; } // kullanıcının fotoğrafı
         public bool IsActive { get; set; }  // Kullanıcını aktivasyon kodunu onaylamış mı ? 
         public bool IsAdmin { get; set; } // Kullanıcı Admin mi ? 
         [Required]
