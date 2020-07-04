@@ -11,6 +11,7 @@ namespace MyEvernote.Entities.Messages
         CheckYourEmail = 153,
         UserAlreadyActive = 154,
         ActivateIdDoesNotExists =155,
-        UserNotFound = 156
+        UserNotFound = 156,
+        ProfileCouldNotUpdated = 157
     }
 }

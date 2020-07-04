@@ -83,12 +83,48 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult EditProfile()
         {
-            return View();
+            EvernoteUser currentUser = Session["login"] as EvernoteUser;
+            EvernoteUserManager eum = new EvernoteUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.getUserBuId(currentUser.Id);
+            if (res.Errors.Count > 0)
+            {
+                // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
+                ErrorViewModel ErrorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata Oluştu",
+                    Items = res.Errors
+                };
+                return View("Error", ErrorNotifyObj);
+            }
+            return View(res.Result);
         }
         [HttpPost]
-        public ActionResult EditProfile(EvernoteUser user)
+        public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
-            return View();
+            if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" ||
+                ProfileImage.ContentType == "image/jpg" ||
+                ProfileImage.ContentType == "image/png"))
+            {
+                string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}"; // ör: user_12.png 
+                ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                model.ProfileImageFilename = filename;
+            }
+            EvernoteUserManager eum = new EvernoteUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Items = res.Errors,
+                    Title = "Profil Güncellenemedi",
+                    RedirectingUrl="/Home/EditProfile"
+                };
+                return View("Error", errorNotifyObj);
+            }
+            Session["login"] = res.Result; // Profil güncellendiği için session güncellendi.
+
+            return RedirectToAction("ShowProfile");
+
         }
         public ActionResult RemoveProfile()
         {
@@ -217,8 +253,8 @@ namespace MyEverynote.WebApp.Controllers
             }
             OkViewModel OkNotifyOnj = new OkViewModel()
             {
-                Title = "Hesap Aktifleştirildi" ,
-                RedirectingUrl="/Home/Login",
+                Title = "Hesap Aktifleştirildi",
+                RedirectingUrl = "/Home/Login",
             };
             OkNotifyOnj.Items.Add(" Hesabınız aktifleştirildi.Artık not paylaşabilir ve beğenme yapabilirsiniz.");
             // return RedirectToAction("UserActivateOk");
