@@ -114,6 +114,25 @@ namespace MyEvernote.BusinessLayer
             return layerResult;
         }
 
+        public BusinessLayerResult<EvernoteUser> RemoveUserById(int id)
+        {
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            EvernoteUser user = repo_user.Find(x => x.Id == id);
+            if(user != null)
+            {
+                if(repo_user.Delete(user) == 0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNotRemove, "Kullanıcı silinemedi.");
+                    return res;
+                }
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.UserCouldNotFind, "Kullanıcı bulunamadı.");
+            }
+            return res;
+        }
+
         public BusinessLayerResult<EvernoteUser> UpdateProfile(EvernoteUser data)
         {
             EvernoteUser db_user = repo_user.Find(x => x.UserName == data.UserName || x.Email == data.Email);
