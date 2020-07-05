@@ -3,19 +3,7 @@
 @{
     ViewBag.Title = "MyEvernote-Giriş Sayfası";
 }
-<style>
-    .validation-summary-errors {
-        border: 2px dotted #a94442;
-        background-color: #d76663;
-        border-radius: 8px;
-    }
-
-        .validation-summary-errors ul {
-            list-style: none;
-            padding: 10px;
-            color: #fff;
-        }
-</style>
+<link href="~/Content/validation-summary.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     <body>
@@ -28,9 +16,9 @@
                             <form id="login-form" class="form" action="" method="post">
                                 <h3 class="text-center text-info">GİRİŞ YAP</h3>
                                 <hr /> <br />@Html.ValidationSummary(false) <br /><hr />
-                                @if(ViewBag.SetLink != null)
+                                @if (ViewBag.SetLink != null)
                                 {
-                            <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
+                                    <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
                                 }
                                 <div class="form-group">
                                     <label for="username" class="text-info"><span class="glyphicon glyphicon-user"></span> Kullanıcı Adı</label><br>
@@ -52,9 +40,8 @@
     </body>
 }
 
-<script>
-    $(function () {
-        $("footer").parent().hide();
-    });
 
-</script>
+@section footer{
+    @Html.Partial("_PartialFooter")
+
+}
