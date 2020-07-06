@@ -8,6 +8,9 @@ namespace MyEverynote.WebApp.ViewModels
 {
     public class ErrorViewModel : NotifyViewModelBase<ErrorMessageObj>
     {
-
+        public ErrorViewModel()
+        {
+            Title = "hata";
+        }
     }
 }

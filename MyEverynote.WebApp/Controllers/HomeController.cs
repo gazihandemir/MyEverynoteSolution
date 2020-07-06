@@ -66,9 +66,12 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult ShowProfile()
         {
+            // 
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
             EvernoteUserManager eum = new EvernoteUserManager();
+            // Kullanıcının id'sini fonksiyon yardımı ile buluyoruz.
             BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+            // eğer hata var ise 
             if (res.Errors.Count > 0)
             {
                 // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
@@ -77,14 +80,17 @@ namespace MyEverynote.WebApp.Controllers
                     Title = "Hata Oluştu",
                     Items = res.Errors
                 };
+                // Hata var ise hata ekranına yönlendir.
                 return View("Error", ErrorNotifyObj);
             }
+            // Eğer yok ise ShowProfile sayfasını aç ve sonucu yolla
             return View(res.Result);
         }
         public ActionResult EditProfile()
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
             EvernoteUserManager eum = new EvernoteUserManager();
+            // Kullanıcının id'sinden kullanıcıyı buluyoruz.
             BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
@@ -101,19 +107,25 @@ namespace MyEverynote.WebApp.Controllers
         [HttpPost]
         public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
-            ModelState.Remove("ModifiedUsername");
+            ModelState.Remove("ModifiedUsername"); //  ModifiedUsername Yoktur hatasını gizlemek için 
+            // Eğer model var ise
             if (ModelState.IsValid)
             {
+                // Eğer kullanıcının yüklemek istediği profil fotoğrafı istedigimiz formatta ise 
                 if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" ||
                 ProfileImage.ContentType == "image/jpg" ||
                 ProfileImage.ContentType == "image/png"))
                 {
+                    // Dosya adını tanımlıyoruz
                     string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}"; // ör: user_12.png 
+                    // Profil fotoğrafının gözükmesini sağlıyoruz.
                     ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                    // Kullanıcının profil resmi ismini veritabanına kaydediyoruz.
                     model.ProfileImageFilename = filename;
                 }
                 EvernoteUserManager eum = new EvernoteUserManager();
                 BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+                // Eğer hata var ise 
                 if (res.Errors.Count > 0)
                 {
                     ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -122,26 +134,28 @@ namespace MyEverynote.WebApp.Controllers
                         Title = "Profil Güncellenemedi",
                         RedirectingUrl = "/Home/EditProfile"
                     };
+                    // Hata mesajı sayfasına yönlendir
                     return View("Error", errorNotifyObj);
                 }
-                Session["login"] = res.Result; // Profil güncellendiği için session güncellendi.
 
+                Session["login"] = res.Result; // Profil güncellendiği için session güncellendi.
+                // Eğer işlem başarılı ise ShowProfile sayfasına git
                 return RedirectToAction("ShowProfile");
             }
             return View(model);
         }
         public ActionResult DeleteProfile()
-        {
+        { // Profil silme
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
             EvernoteUserManager eum = new EvernoteUserManager();
             BusinessLayerResult<EvernoteUser> res = eum.RemoveUserById(currentUser.Id);
-            if(res.Errors.Count > 0)
+            if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
                 {
                     Items = res.Errors,
-                Title = "Profil Silinemedi.",
-                RedirectingUrl ="/Home/ShowProfile"
+                    Title = "Profil Silinemedi.",
+                    RedirectingUrl = "/Home/ShowProfile"
                 };
                 return View("Error", errorNotifyObj);
             }
