@@ -68,7 +68,7 @@ namespace MyEverynote.WebApp.Controllers
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
             EvernoteUserManager eum = new EvernoteUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.getUserBuId(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
@@ -85,7 +85,7 @@ namespace MyEverynote.WebApp.Controllers
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
             EvernoteUserManager eum = new EvernoteUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.getUserBuId(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
