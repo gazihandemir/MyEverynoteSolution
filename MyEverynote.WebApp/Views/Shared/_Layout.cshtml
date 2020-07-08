@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    @{ 
+    @{
         EvernoteUser user = null;
         if (Session["login"] != null)
         {
@@ -55,10 +55,34 @@
                 <ul class="nav navbar-nav">
                     @if (user != null)
                     {
-                        <li>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-wrench"></span> Yönetim
+                        <li class="dropdown">
+                            <a href="/Note/MyNotes" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-wrench"></span> Yönetim  <span class="caret"></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/Note/AddNew"><span class="glyphicon glyphicon-plus"></span> Not Ekle</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/Note/MyNotes"><span class="glyphicon glyphicon-th-list"></span> Notlarım</a>
+                                </li>
+                                <li>
+                                    <a href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-heart"></span> Beğendiklerim</a>
+                                </li>
+                                @if (user.IsAdmin)
+                                {
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="/Category/AddNew"><span class="glyphicon glyphicon-plus"></span> Kategori Ekle</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Category/List"><span class="glyphicon glyphicon-th-list"></span> Kategoriler</a>
+                                    </li>
+                                }
+                            </ul>
+
                         </li>
                     }
                     <li>
@@ -94,10 +118,31 @@
                     }
                     else
                     {
-                        <li>
-                            <a href="/Home/ShowProfile">
+
+                        <li class="dropdown">
+                            <a href="/home/ShowProfile" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-user"></span>  @user.UserName
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/Home/ShowProfile">
+                                        <span class="glyphicon glyphicon-user"></span> Profili Göster
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/Home/EditProfile">
+                                        <span class="glyphicon glyphicon-edit"></span> Profili Düzenle
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Home/DeleteProfile"
+                                       onclick="return confirm('Hesabınızı silmek istediğinize emin misiniz ?')">
+                                        <span class="glyphicon glyphicon-trash"></span> Profili Sil
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="/Home/Logout">
@@ -114,7 +159,7 @@
 
     @RenderBody()
     <!-- /.container -->
-    @RenderSection("footer",required:false)
+    @RenderSection("footer", required: false)
 
 </body>
 
