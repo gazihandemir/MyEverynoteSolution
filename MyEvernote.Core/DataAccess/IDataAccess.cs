@@ -5,10 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyEvernote.DataAccessLayer.Abstract
+namespace MyEvernote.Core.DataAccess
 {
     // EntityFramework , Sql yada lazım olduğunda başka bir şekle çalışmak için oluşturulmuş İNTERFACE
-    public interface IRepository<T>
+    public interface IDataAccess<T>
     {
          List<T> List(); // listeleme
         IQueryable<T> ListQueryable(); // listeleme

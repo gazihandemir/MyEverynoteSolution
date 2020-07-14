@@ -1,6 +1,5 @@
 ﻿using MyEvernote.Common;
-using MyEvernote.DataAccessLayer;
-using MyEvernote.DataAccessLayer.Abstract;
+using MyEvernote.Core.DataAccess;
 using MyEvernote.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> : RepositoryBase,IRepository<T> where T : class // T tipi class olmak zorunda
+    public class Repository<T> : RepositoryBase,IDataAccess<T> where T : class // T tipi class olmak zorunda
     {
         //private DatabaseContext db = new DatabaseContext();
         private DbSet<T> _objectSet;

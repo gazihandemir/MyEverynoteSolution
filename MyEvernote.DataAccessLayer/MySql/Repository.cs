@@ -1,4 +1,4 @@
-﻿using MyEvernote.DataAccessLayer.Abstract;
+﻿using MyEvernote.Core.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MyEvernote.DataAccessLayer.MySql
 {
     // SQL kullanacağımız zaman hazır bulunan ve düzenlenmemiş sınıfımız.
-    public class Repository<T> : RepositoryBase, IRepository<T> where T : class
+    public class Repository<T> : RepositoryBase, IDataAccess<T> where T : class
     {
         public int Delete(T obj)
         {
