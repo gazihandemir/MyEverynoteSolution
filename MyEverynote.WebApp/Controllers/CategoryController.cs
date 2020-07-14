@@ -47,6 +47,9 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Description,CreatedOn,ModifiedOn,ModifiedUserName")] Category category)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
                 categoryManager.Insert(category);
@@ -60,6 +63,9 @@ namespace MyEverynote.WebApp.Controllers
       
         public ActionResult Edit(int? id)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,8 +87,10 @@ namespace MyEverynote.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO : incele...
-                categoryManager.Update(category);
+                Category cat = categoryManager.Find(x => x.Id == category.Id);
+                cat.Title = category.Title;
+                cat.Description = category.Description; 
+                categoryManager.Update(cat);
                 return RedirectToAction("Index");
             }
             return View(category);
