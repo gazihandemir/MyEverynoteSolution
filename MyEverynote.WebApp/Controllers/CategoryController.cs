@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MyEvernote.BusinessLayer;
+using MyEvernote.BusinessLayer.Abstract;
 using MyEvernote.Entities;
 
 namespace MyEverynote.WebApp.Controllers
@@ -14,7 +14,7 @@ namespace MyEverynote.WebApp.Controllers
     public class CategoryController : Controller
     { 
 
-        CategoryManager categoryManager = new CategoryManager();
+        private CategoryManager categoryManager = new CategoryManager();
         public ActionResult Index()
         {
             return View(categoryManager.List()); 
