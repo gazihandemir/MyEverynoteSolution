@@ -1,4 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
+using MyEvernote.BusinessLayer.Abstract;
+using MyEvernote.BusinessLayer.Results;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
@@ -13,6 +15,9 @@ namespace MyEverynote.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private NoteManager noteManager = new NoteManager();
+        private CategoryManager categoryManager = new CategoryManager();
+        private EvernoteUserManager evernoteUserManager = new EvernoteUserManager();
         // GET: Home
         public ActionResult Index()
         {
@@ -25,9 +30,9 @@ namespace MyEverynote.WebApp.Controllers
               {
                   return View(TempData["mm"] as List<Note>);
               }*/
-            NoteManager nm = new NoteManager();
+            
             // Değiştirilme zamanına göre bütün notların listelenmesi
-            return View(nm.getAllNote().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
+            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
                                                                                         // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
         }
         public ActionResult ByCategory(int? id)
@@ -37,9 +42,9 @@ namespace MyEverynote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-            CategoryManager cm = new CategoryManager();
+           
             // Category id bulma
-            Category cat = cm.getCategoryById(id.Value);
+            Category cat = categoryManager.Find(x => x.Id == id.Value);
             // id yoksa hata döndür
             if (cat == null)
             {
@@ -56,9 +61,9 @@ namespace MyEverynote.WebApp.Controllers
                  CategoryManager cm = new CategoryManager();  // cshtml sayfasının içinde bulunan c# kodları
                 List<Category> list = cm.getCategories();
              */
-            NoteManager nm = new NoteManager();
+           
             // En Beğenilenler'e tıklanıldıgında notlar begeni sayısına göre sıralansın
-            return View("Index", nm.getAllNote().OrderByDescending(x => x.LikeCount).ToList());
+            return View("Index", noteManager.ListQueryable().OrderByDescending(x => x.LikeCount).ToList());
         }
         public ActionResult About()
         {
@@ -68,9 +73,9 @@ namespace MyEverynote.WebApp.Controllers
         {
             // 
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
-            EvernoteUserManager eum = new EvernoteUserManager();
+           
             // Kullanıcının id'sini fonksiyon yardımı ile buluyoruz.
-            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
             // eğer hata var ise 
             if (res.Errors.Count > 0)
             {
@@ -89,9 +94,9 @@ namespace MyEverynote.WebApp.Controllers
         public ActionResult EditProfile()
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
-            EvernoteUserManager eum = new EvernoteUserManager();
+            
             // Kullanıcının id'sinden kullanıcıyı buluyoruz.
-            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
@@ -123,8 +128,8 @@ namespace MyEverynote.WebApp.Controllers
                     // Kullanıcının profil resmi ismini veritabanına kaydediyoruz.
                     model.ProfileImageFilename = filename;
                 }
-                EvernoteUserManager eum = new EvernoteUserManager();
-                BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+                
+                BusinessLayerResult<EvernoteUser> res = evernoteUserManager.UpdateProfile(model);
                 // Eğer hata var ise 
                 if (res.Errors.Count > 0)
                 {
@@ -147,8 +152,8 @@ namespace MyEverynote.WebApp.Controllers
         public ActionResult DeleteProfile()
         { // Profil silme
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
-            EvernoteUserManager eum = new EvernoteUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.RemoveUserById(currentUser.Id);
+            
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RemoveUserById(currentUser.Id);
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -172,8 +177,8 @@ namespace MyEverynote.WebApp.Controllers
         {
             if (ModelState.IsValid) // Veriler girildiyse ife gir 
             {
-                EvernoteUserManager eum = new EvernoteUserManager();
-                BusinessLayerResult<EvernoteUser> res = eum.LoginUser(model);
+               
+                BusinessLayerResult<EvernoteUser> res = evernoteUserManager.LoginUser(model);
                 // Eğer hata varsa ife gir 
                 if (res.Errors.Count > 0)
                 {
@@ -213,8 +218,8 @@ namespace MyEverynote.WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-                EvernoteUserManager eum = new EvernoteUserManager();
-                BusinessLayerResult<EvernoteUser> res = eum.RegisterUser(model);
+              
+                BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RegisterUser(model);
                 if (res.Errors.Count > 0)
                 {
                     res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
@@ -270,8 +275,8 @@ namespace MyEverynote.WebApp.Controllers
         public ActionResult UserActivate(Guid id)
         {
             // Kullanıcı aktivasyonu saglanacak 
-            EvernoteUserManager eum = new EvernoteUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.ActivateUser(id);
+           
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.ActivateUser(id);
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel ErrorNotifyObj = new ErrorViewModel()

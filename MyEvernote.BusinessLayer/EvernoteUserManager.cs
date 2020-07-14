@@ -1,4 +1,6 @@
-﻿using MyEvernote.Common.Helpers;
+﻿using MyEvernote.BusinessLayer.Abstract;
+using MyEvernote.BusinessLayer.Results;
+using MyEvernote.Common.Helpers;
 using MyEvernote.DataAccessLayer.EntityFramework;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
@@ -11,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.BusinessLayer
 {
-    public class EvernoteUserManager
+    public class EvernoteUserManager : ManagerBase<EvernoteUser>
     {
         // Data AccessLayerdaki Repository<T(Generic class)> nesnemizi(EvernoteUser) oluşturuyoruz.
-        private Repository<EvernoteUser> repo_user = new Repository<EvernoteUser>();
+        //  private Repository<EvernoteUser> repo_user = new Repository<EvernoteUser>();
         // Kullanıcı kayıt yapmak için yazılmış fonksiyon.
         public BusinessLayerResult<EvernoteUser> RegisterUser(RegisterViewModel data)
         {
@@ -28,7 +30,7 @@ namespace MyEvernote.BusinessLayer
             */
             // Kullanıcının yazdığı Username veya Email  data'nın içindeki yani veri tabanının içinde var mı diye kontrol yapıyoruz.
             // Eğer var ise user null olmuyor , yok ise null oluyor buna göre kontrol yapacağız.
-            EvernoteUser user = repo_user.Find(x => x.UserName == data.Username || x.Email == data.Email); // Find -> Repository fonksiyon.
+            EvernoteUser user = Find(x => x.UserName == data.Username || x.Email == data.Email); // Find -> Repository fonksiyon.
             // Hata mesajları için nesne oluşturuyoruz 
             BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
             if (user != null) // Eğer kullanıcı var ise 
@@ -52,7 +54,7 @@ namespace MyEvernote.BusinessLayer
             else
             {
                 // Ekleme
-                int dbResult = repo_user.Insert(new EvernoteUser() // int dbresult tanımlamamızın sebebi eğer kayıt yapılırsa dbresult değeri 1 artıyor ve veri tabanına bakarak eklendiğini anlıyoruz.
+                int dbResult = Insert(new EvernoteUser() // int dbresult tanımlamamızın sebebi eğer kayıt yapılırsa dbresult değeri 1 artıyor ve veri tabanına bakarak eklendiğini anlıyoruz.
                 {
                     UserName = data.Username,
                     Email = data.Email,
@@ -67,7 +69,7 @@ namespace MyEvernote.BusinessLayer
                 });
                 if (dbResult > 0) // Eğer eklenmiş ise 
                 {
-                    layerResult.Result = repo_user.Find(x => x.Email == data.Email && x.UserName == data.Username);
+                    layerResult.Result =Find(x => x.Email == data.Email && x.UserName == data.Username);
                     // TODO : activasyon maili atılacak.
                     // layerResult.Result.ActivateGuid
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
@@ -89,7 +91,7 @@ namespace MyEvernote.BusinessLayer
             // Hata mesajları oluşturmak için yeni bir nesne oluşturuyoruz.
             BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
             // Kullanıcı var mı diye Find işlemi yapıyoruz.(Kullanıcı adı ve şifre uyuşuyor mu ?)
-            layerResult.Result = repo_user.Find(x => x.UserName == data.Username && x.Password == data.Password);
+            layerResult.Result = Find(x => x.UserName == data.Username && x.Password == data.Password);
 
             if (layerResult.Result != null) // Eğer kullanıcı var ise 
             {
@@ -111,17 +113,17 @@ namespace MyEvernote.BusinessLayer
             return layerResult;
         }     // Kullanıcı giriş yap 
 
-        
+
         public BusinessLayerResult<EvernoteUser> RemoveUserById(int id) // Kullanıcıyı id'sine göre silme işlemi
         {
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             // Kullanıcıc id'sini bulmaya çalışma
-            EvernoteUser user = repo_user.Find(x => x.Id == id);
+            EvernoteUser user = Find(x => x.Id == id);
             // eğer kullanıcı var ise 
             if (user != null)
             {
                 // Delete işlemi başarısız ise
-                if (repo_user.Delete(user) /*Kullanıcı hem silinir hem döndürdüğü int değer kontol edilir */ == 0)
+                if (Delete(user) /*Kullanıcı hem silinir hem döndürdüğü int değer kontol edilir */ == 0)
                 {
                     res.AddError(ErrorMessageCode.UserCouldNotRemove, "Kullanıcı silinemedi.");
                     return res;
@@ -137,7 +139,7 @@ namespace MyEvernote.BusinessLayer
 
         public BusinessLayerResult<EvernoteUser> UpdateProfile(EvernoteUser data)
         { // Kullanıcının userName'ni veya Emaili var mı bulmaya çalışıyoruz. 
-            EvernoteUser db_user = repo_user.Find(x => x.UserName == data.UserName || x.Email == data.Email);
+            EvernoteUser db_user =Find(x => x.UserName == data.UserName || x.Email == data.Email);
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             // Eğer kullanıcı var ise  <- &&
             // && -> Kullanıcı kendi ismini değiştirmez ise yani başka şeyleri değiştirip kullanıcı adını değiştirmek istemiyorsa
@@ -156,7 +158,7 @@ namespace MyEvernote.BusinessLayer
                 }
                 return res;
             }
-            res.Result = repo_user.Find(x => x.Id == data.Id);
+            res.Result = Find(x => x.Id == data.Id);
             res.Result.Email = data.Email; // Yazılan emaili veri tabanında güncelle
             res.Result.Name = data.Name; // Yazılan ismi veri tabanında güncelle
             res.Result.Surname = data.Surname; // Yazılan soy ismi veri tabanında güncelle
@@ -167,7 +169,7 @@ namespace MyEvernote.BusinessLayer
             {
                 res.Result.ProfileImageFilename = data.ProfileImageFilename; // Profil resmini güncelle
             }
-            if (repo_user.Update(res.Result)/*Kullanıcı hem güncellenir hem döndürdüğü int değer kontol edilir */  == 0)
+            if (Update(res.Result)/*Kullanıcı hem güncellenir hem döndürdüğü int değer kontol edilir */  == 0)
             {
                 res.AddError(ErrorMessageCode.ProfileCouldNotUpdated, "Profil Güncellenemedi.");
             }
@@ -178,7 +180,7 @@ namespace MyEvernote.BusinessLayer
         {
             BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
             // aradğımız guid veri tabanındaki guide eşitmi buluyoruz
-            layerResult.Result = repo_user.Find(x => x.ActivateGuid == activateId);
+            layerResult.Result = Find(x => x.ActivateGuid == activateId);
             // Eger yukardaki işlem başarılı ise 
             if (layerResult.Result != null)
             {      // Kullanıcı aktifse IsActive == true
@@ -189,7 +191,7 @@ namespace MyEvernote.BusinessLayer
                 }
                 // Kullanıcıyı güncelle 
                 layerResult.Result.IsActive = true;
-                repo_user.Update(layerResult.Result);
+                Update(layerResult.Result);
             }
             // Eğer aktifleştirilecek bir kullanıcı bulunamadı ise 
             else
@@ -207,7 +209,7 @@ namespace MyEvernote.BusinessLayer
             // Hata oluşturmak için res nesnesi oluşturuyoruz.
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             // kullanıcıc id'sini bulmak
-            res.Result = repo_user.Find(x => x.Id == id);
+            res.Result =Find(x => x.Id == id);
             // Eğer id bulunamamışsa hata mesajı oluştur
             if (res.Result == null)
             {

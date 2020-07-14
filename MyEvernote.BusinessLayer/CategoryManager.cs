@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyEvernote.BusinessLayer
+namespace MyEvernote.BusinessLayer.Abstract
 {
-    public class CategoryManager
+    public class CategoryManager : ManagerBase<Category>
     {
-        // Data AccessLayerdaki Repository<T(Generic class)> nesnemizi(Category) oluşturuyoruz.
+      /*  // Data AccessLayerdaki Repository<T(Generic class)> nesnemizi(Category) oluşturuyoruz.
         private Repository<Category> repo_category = new Repository<Category>();
         // Categoryleri liste şeklinde getiren ve List dönen getCategories() fonksiyon.
         public List<Category> getCategories()
@@ -22,5 +22,6 @@ namespace MyEvernote.BusinessLayer
         {
             return repo_category.Find(x => x.Id == id); // Find -> Repository fonksiyon.
         }
+      */
     }
 }

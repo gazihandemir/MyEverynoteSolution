@@ -17,7 +17,7 @@ namespace MyEverynote.WebApp.Controllers
         CategoryManager categoryManager = new CategoryManager();
         public ActionResult Index()
         {
-            return View(categoryManager.getCategories()); 
+            return View(categoryManager.List()); 
         }
 
       
@@ -27,7 +27,7 @@ namespace MyEverynote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = categoryManager.getCategoryById(id.Value);
+            Category category = categoryManager.Find(x => x.Id == id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -49,8 +49,8 @@ namespace MyEverynote.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                categoryManager.Insert(category);
+                
                 return RedirectToAction("Index");
             }
 
@@ -64,7 +64,8 @@ namespace MyEverynote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+
+            Category category = categoryManager.Find(x => x.Id == id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -80,8 +81,8 @@ namespace MyEverynote.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                // TODO : incele...
+                categoryManager.Update(category);
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -94,7 +95,7 @@ namespace MyEverynote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
+            Category category = categoryManager.Find(x => x.Id == id.Value);
             if (category == null)
             {
                 return HttpNotFound();
@@ -107,9 +108,8 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            Category category = categoryManager.Find(x => x.Id == id);
+            categoryManager.Delete(category);
             return RedirectToAction("Index");
         }
 
