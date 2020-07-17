@@ -1,5 +1,5 @@
 ﻿@model MyEvernote.Entities.Category
-
+@using MyEverynote.WebApp
 @{
     ViewBag.Title = "Details";
 }
@@ -59,16 +59,21 @@
     </div>
     <div class="col-md-8 col-md-offset-2">
         <p>
-            <a href="/Category/Edit/@Model.Id" class="btn btn-warning">
-                <span class="glyphicon glyphicon-edit"></span> Edit
-            </a>
-            <a href="/Category/Index" class="btn btn-default ">
-                <span class="glyphicon glyphicon-arrow-left"></span> Back to List
-            </a>
+            <!--    <a href="/Category/Edit/@Model.Id" class="btn btn-warning">
+         <span class="glyphicon glyphicon-edit"></span> Edit
+     </a>
+     <a href="/Category/Index" class="btn btn-default ">
+         <span class="glyphicon glyphicon-arrow-left"></span> Back to List
+     </a>
+    -->
+            @Bootstrap.LinkButton("/Category/Edit/" + Model.Id, "warning", string.Empty,
+            string.Empty, "edit", " Edit")
+            @Bootstrap.LinkButton("/Category/Index", "default", string.Empty,
+            string.Empty, "arrow-left", " Back to List")
             <!--
-                 Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-             Html.ActionLink("Back to List", "Index")
-            -->
+         Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+     Html.ActionLink("Back to List", "Index")
+    -->
         </p>
     </div>
 </div>
