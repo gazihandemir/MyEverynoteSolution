@@ -54,7 +54,7 @@ namespace MyEvernote.BusinessLayer
             else
             {
                 // Ekleme
-                int dbResult = Insert(new EvernoteUser() // int dbresult tanımlamamızın sebebi eğer kayıt yapılırsa dbresult değeri 1 artıyor ve veri tabanına bakarak eklendiğini anlıyoruz.
+                int dbResult = base.Insert(new EvernoteUser() // int dbresult tanımlamamızın sebebi eğer kayıt yapılırsa dbresult değeri 1 artıyor ve veri tabanına bakarak eklendiğini anlıyoruz.
                 {
                     UserName = data.Username,
                     Email = data.Email,
@@ -69,7 +69,7 @@ namespace MyEvernote.BusinessLayer
                 });
                 if (dbResult > 0) // Eğer eklenmiş ise 
                 {
-                    layerResult.Result =Find(x => x.Email == data.Email && x.UserName == data.Username);
+                    layerResult.Result = Find(x => x.Email == data.Email && x.UserName == data.Username);
                     // TODO : activasyon maili atılacak.
                     // layerResult.Result.ActivateGuid
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
@@ -139,7 +139,7 @@ namespace MyEvernote.BusinessLayer
 
         public BusinessLayerResult<EvernoteUser> UpdateProfile(EvernoteUser data)
         { // Kullanıcının userName'ni veya Emaili var mı bulmaya çalışıyoruz. 
-            EvernoteUser db_user =Find(x => x.UserName == data.UserName || x.Email == data.Email);
+            EvernoteUser db_user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             // Eğer kullanıcı var ise  <- &&
             // && -> Kullanıcı kendi ismini değiştirmez ise yani başka şeyleri değiştirip kullanıcı adını değiştirmek istemiyorsa
@@ -209,7 +209,7 @@ namespace MyEvernote.BusinessLayer
             // Hata oluşturmak için res nesnesi oluşturuyoruz.
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             // kullanıcıc id'sini bulmak
-            res.Result =Find(x => x.Id == id);
+            res.Result = Find(x => x.Id == id);
             // Eğer id bulunamamışsa hata mesajı oluştur
             if (res.Result == null)
             {
@@ -217,6 +217,45 @@ namespace MyEvernote.BusinessLayer
             }
             // id yoksa hata döndür , id varsa idnin kendisini gönder
             return res;
+        }
+
+        // Method hiding -> new 
+        public new BusinessLayerResult<EvernoteUser> Insert(EvernoteUser data)
+        {
+
+
+            EvernoteUser user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
+
+            BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
+            layerResult.Result = data;
+            if (user != null)
+            {
+
+                if (user.UserName == data.UserName)
+                {
+
+                    layerResult.AddError(ErrorMessageCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (user.Email == data.Email)
+                {
+
+                    layerResult.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
+                }
+            }
+
+            else
+            {
+                layerResult.Result.ProfileImageFilename = "user.jpg";
+                layerResult.Result.ActivateGuid = Guid.NewGuid();
+                if (base.Insert(layerResult.Result) == 0)
+                {
+                    layerResult.AddError(ErrorMessageCode.UserCountNotInserted, "Kullanıcı eklenemedi");
+                }
+           
+            }
+            return layerResult;
+
         }
     }
 }

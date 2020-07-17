@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
+using MyEvernote.BusinessLayer.Results;
 using MyEvernote.Entities;
 
 namespace MyEverynote.WebApp.Controllers
@@ -16,13 +17,13 @@ namespace MyEverynote.WebApp.Controllers
         private EvernoteUserManager evernoteUserManager = new EvernoteUserManager();
 
 
-  
+
         public ActionResult Index()
         {
             return View(evernoteUserManager.List());
         }
 
-      
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +38,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(evernoteUser);
         }
 
-    
+
         public ActionResult Create()
         {
             return View();
@@ -48,18 +49,27 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EvernoteUser evernoteUser)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
-                evernoteUserManager.Insert(evernoteUser); // düzeltilecek
+                BusinessLayerResult<EvernoteUser> res = evernoteUserManager.Insert(evernoteUser);
+                if(res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(evernoteUser);
+                }
                 return RedirectToAction("Index");
             }
 
             return View(evernoteUser);
         }
 
-  
+
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,6 +87,9 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EvernoteUser evernoteUser)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
                 // düzenlenecek
@@ -85,7 +98,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(evernoteUser);
         }
 
- 
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -100,7 +113,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(evernoteUser);
         }
 
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
