@@ -92,7 +92,12 @@ namespace MyEverynote.WebApp.Controllers
             ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
-                // düzenlenecek
+                BusinessLayerResult<EvernoteUser> res = evernoteUserManager.Insert(evernoteUser);
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(evernoteUser);
+                }
                 return RedirectToAction("Index");
             }
             return View(evernoteUser);

@@ -169,7 +169,7 @@ namespace MyEvernote.BusinessLayer
             {
                 res.Result.ProfileImageFilename = data.ProfileImageFilename; // Profil resmini güncelle
             }
-            if (Update(res.Result)/*Kullanıcı hem güncellenir hem döndürdüğü int değer kontol edilir */  == 0)
+            if (base.Update(res.Result)/*Kullanıcı hem güncellenir hem döndürdüğü int değer kontol edilir */  == 0)
             {
                 res.AddError(ErrorMessageCode.ProfileCouldNotUpdated, "Profil Güncellenemedi.");
             }
@@ -252,10 +252,46 @@ namespace MyEvernote.BusinessLayer
                 {
                     layerResult.AddError(ErrorMessageCode.UserCountNotInserted, "Kullanıcı eklenemedi");
                 }
-           
+
             }
             return layerResult;
 
+        }
+
+        public new BusinessLayerResult<EvernoteUser> Update(EvernoteUser data)
+        {
+
+            EvernoteUser db_user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = data;
+
+            if (db_user != null && db_user.Id != data.Id)
+            {
+
+                if (db_user.UserName == data.UserName)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı");
+                }
+
+                if (db_user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kayıtlı");
+                }
+                return res;
+            }
+            res.Result = Find(x => x.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.UserName = data.UserName;
+            res.Result.IsActive = data.IsActive;
+            res.Result.IsAdmin = data.IsAdmin;
+            if (base.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessageCode.UserCouldNotUpdated, "Kullanıcı Güncellenemedi.");
+            }
+            return res;
         }
     }
 }

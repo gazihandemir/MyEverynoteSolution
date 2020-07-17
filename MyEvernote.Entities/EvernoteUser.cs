@@ -31,14 +31,14 @@ namespace MyEvernote.Entities
             Required(ErrorMessage = "{0} alanı gereklidir.")]
         public string Password { get; set; }  // Kullanıcının şifresi
         [StringLength(30),
-            ScaffoldColumn(false)] // /images/user_12.jpg
+            ScaffoldColumn(true)] // /images/user_12.jpg
         public string ProfileImageFilename { get; set; } // kullanıcının fotoğrafı
         [DisplayName("Is Active")]
         public bool IsActive { get; set; }  // Kullanıcını aktivasyon kodunu onaylamış mı ? 
         [DisplayName("Is Admin")]
         public bool IsAdmin { get; set; } // Kullanıcı Admin mi ? 
         [Required,
-            ScaffoldColumn(false)]
+            ScaffoldColumn(true)]
         public Guid ActivateGuid { get; set; } // Kullanıcının aktivasyon kodu
 
         public virtual List<Note> Notes { get; set; } // Kullanıcının notu
