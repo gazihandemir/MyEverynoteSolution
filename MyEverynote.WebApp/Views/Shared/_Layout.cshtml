@@ -75,10 +75,17 @@
                                 {
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="/Category/Create"><span class="glyphicon glyphicon-plus"></span> Kategori Ekle</a>
+                                        @Bootstrap.LinkMenu("/Category/Create", "plus", " Kategori Ekle")
                                     </li>
                                     <li>
-                                        <a href="/Category/Index"><span class="glyphicon glyphicon-th-list"></span> Kategoriler</a>
+                                        @Bootstrap.LinkMenu("/Category/Index", "th-list", " Kategoriler")
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        @Bootstrap.LinkMenu("/EvernoteUser/Create", "plus", " Kullanıcı Ekle")
+                                    </li>
+                                    <li>
+                                        @Bootstrap.LinkMenu("/EvernoteUser/Index", "th-list", " Kullanıcılar")
                                     </li>
                                 }
                             </ul>

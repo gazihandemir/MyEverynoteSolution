@@ -30,11 +30,15 @@ namespace MyEvernote.Entities
             StringLength(25, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır."),
             Required(ErrorMessage = "{0} alanı gereklidir.")]
         public string Password { get; set; }  // Kullanıcının şifresi
-        [StringLength(30)] // /images/user_12.jpg
+        [StringLength(30),
+            ScaffoldColumn(false)] // /images/user_12.jpg
         public string ProfileImageFilename { get; set; } // kullanıcının fotoğrafı
+        [DisplayName("Is Active")]
         public bool IsActive { get; set; }  // Kullanıcını aktivasyon kodunu onaylamış mı ? 
+        [DisplayName("Is Admin")]
         public bool IsAdmin { get; set; } // Kullanıcı Admin mi ? 
-        [Required]
+        [Required,
+            ScaffoldColumn(false)]
         public Guid ActivateGuid { get; set; } // Kullanıcının aktivasyon kodu
 
         public virtual List<Note> Notes { get; set; } // Kullanıcının notu
