@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MyEvernote.Core.DataAccess
 {
     // EntityFramework , Sql yada lazım olduğunda başka bir şekle çalışmak için oluşturulmuş İNTERFACE
-    public interface IDataAccess<T>
+    public interface IDataAccess<T> 
     {
          List<T> List(); // listeleme
         IQueryable<T> ListQueryable(); // listeleme
