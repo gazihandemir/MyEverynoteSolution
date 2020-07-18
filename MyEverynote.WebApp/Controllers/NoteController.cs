@@ -14,17 +14,27 @@ namespace MyEverynote.WebApp.Controllers
 {
     public class NoteController : Controller
     {
-        NoteManager noteManager = new NoteManager();
-        CategoryManager categoryManager = new CategoryManager();
-
+        private NoteManager noteManager = new NoteManager();
+        private CategoryManager categoryManager = new CategoryManager();
+        private LikedManager likedManager = new LikedManager();
         public ActionResult Index()
         {
-            var notes = noteManager.ListQueryable().Include("Category")
+            var notes = noteManager.ListQueryable()
+                .Include("Category").Include("Owner")
                 .Where(x => x.Owner.Id == CurrentSession.User.Id)
                 .OrderByDescending(x => x.ModifiedOn);
             return View(notes.ToList());
         }
+        public ActionResult MyLikedNotes()
+        {
+            var notes = likedManager
+                .ListQueryable().Include("Liked").Include("Note")
+                .Where(x => x.LikedUser.Id == CurrentSession.User.Id)
+                .Select(x => x.Note).Include("Category").Include("Owner")
+                .OrderByDescending(x => x.ModifiedOn);
 
+            return View("Index",notes.ToList());
+        }
 
         public ActionResult Details(int? id)
         {
@@ -52,9 +62,12 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Note note)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
-
+                note.Owner = CurrentSession.User;
                 noteManager.Insert(note);
                 return RedirectToAction("Index");
             }
@@ -84,10 +97,18 @@ namespace MyEverynote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Note note)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
             if (ModelState.IsValid)
             {
-                db.Entry(note).State = EntityState.Modified;
-                db.SaveChanges();
+                Note db_note = noteManager.Find(x => x.Id == note.Id);
+                db_note.IsDraft = note.IsDraft;
+                db_note.CategoryId = note.CategoryId;
+                db_note.Text = note.Text;
+                db_note.Title = note.Title;
+                noteManager.Update(db_note);
+
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title", note.CategoryId);
