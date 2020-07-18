@@ -8,32 +8,31 @@ using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.Models;
 
 namespace MyEverynote.WebApp.Controllers
 {
     public class NoteController : Controller
     {
         NoteManager noteManager = new NoteManager();
+        CategoryManager categoryManager = new CategoryManager();
 
-        // GET: Note
         public ActionResult Index()
         {
-            if(Session["Login"]!= null)
-            {
-                EvernoteUser user = 
-            }
-            var notes = db.Notes.Include(n => n.Category);
+            var notes = noteManager.ListQueryable().Include("Category")
+                .Where(x => x.Owner.Id == CurrentSession.User.Id)
+                .OrderByDescending(x => x.ModifiedOn);
             return View(notes.ToList());
         }
 
-        // GET: Note/Details/5
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Note note = db.Notes.Find(id);
+            Note note = noteManager.Find(x => x.Id == id);
             if (note == null)
             {
                 return HttpNotFound();
@@ -41,53 +40,49 @@ namespace MyEverynote.WebApp.Controllers
             return View(note);
         }
 
-        // GET: Note/Create
+
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Title");
+            ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title");
             return View();
         }
 
-        // POST: Note/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Text,IsDraft,LikeCount,CategoryId,CreatedOn,ModifiedOn,ModifiedUserName")] Note note)
+        public ActionResult Create(Note note)
         {
             if (ModelState.IsValid)
             {
-                db.Notes.Add(note);
-                db.SaveChanges();
+
+                noteManager.Insert(note);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Title", note.CategoryId);
+            ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title", note.CategoryId);
             return View(note);
         }
 
-        // GET: Note/Edit/5
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Note note = db.Notes.Find(id);
+            Note note = noteManager.Find(x => x.Id == id);
             if (note == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Title", note.CategoryId);
+            ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title", note.CategoryId);
             return View(note);
         }
 
-        // POST: Note/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Text,IsDraft,LikeCount,CategoryId,CreatedOn,ModifiedOn,ModifiedUserName")] Note note)
+        public ActionResult Edit(Note note)
         {
             if (ModelState.IsValid)
             {
@@ -95,18 +90,18 @@ namespace MyEverynote.WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Title", note.CategoryId);
+            ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title", note.CategoryId);
             return View(note);
         }
 
-        // GET: Note/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Note note = db.Notes.Find(id);
+            Note note = noteManager.Find(x => x.Id == id);
             if (note == null)
             {
                 return HttpNotFound();
@@ -114,24 +109,16 @@ namespace MyEverynote.WebApp.Controllers
             return View(note);
         }
 
-        // POST: Note/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Note note = db.Notes.Find(id);
-            db.Notes.Remove(note);
-            db.SaveChanges();
+            Note note = noteManager.Find(x => x.Id == id);
+            noteManager.Delete(note);
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
