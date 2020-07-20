@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
-   public class DatabaseContext : DbContext
-        // Veri tabanımıza kaydedeceğimiz tüm verilerimizin başlıkları
+    public class DatabaseContext : DbContext
+    // Veri tabanımıza kaydedeceğimiz tüm verilerimizin başlıkları
     {
         public DbSet<EvernoteUser> EvernoteUsers { get; set; } // Kullanıcılar
         public DbSet<Note> Notes { get; set; } // Kullanıcıların yazdığı notlar
@@ -20,6 +20,18 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
         {
             Database.SetInitializer(new MyInitializer());
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // FluentAPI 
+            modelBuilder.Entity<Note>()
+              .HasMany(n => n.Comments) // çok ilişkilidir comments tablosuyla
+              .WithRequired(c => c.Note) // commentin notu olmak zorundadır
+              .WillCascadeOnDelete(true); // not silinince yorumlarıda sil bağlantısı
+            modelBuilder.Entity<Note>()
+                .HasMany(n => n.Likes)
+                .WithRequired(c => c.Note)
+                .WillCascadeOnDelete(true);
+        }
     }
-    
+
 }
