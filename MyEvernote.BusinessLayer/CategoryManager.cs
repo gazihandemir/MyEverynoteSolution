@@ -50,6 +50,7 @@ namespace MyEvernote.BusinessLayer
           {
               return repo_category.Find(x => x.Id == id); // Find -> Repository fonksiyon.
           }
-        */ #endregion
+        */ 
+        #endregion
     }
 }
