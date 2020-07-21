@@ -35,6 +35,9 @@ namespace MyEvernote.BusinessLayer
                   return base.Delete(category);
               } */
 
+
+
+        #region ÖncedenYazdıklarımız
         /*  // Data AccessLayerdaki Repository<T(Generic class)> nesnemizi(Category) oluşturuyoruz.
           private Repository<Category> repo_category = new Repository<Category>();
           // Categoryleri liste şeklinde getiren ve List dönen getCategories() fonksiyon.
@@ -47,6 +50,6 @@ namespace MyEvernote.BusinessLayer
           {
               return repo_category.Find(x => x.Id == id); // Find -> Repository fonksiyon.
           }
-        */
+        */ #endregion
     }
 }

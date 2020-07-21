@@ -222,8 +222,6 @@ namespace MyEvernote.BusinessLayer
         // Method hiding -> new 
         public new BusinessLayerResult<EvernoteUser> Insert(EvernoteUser data)
         {
-
-
             EvernoteUser user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
 
             BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
@@ -246,7 +244,8 @@ namespace MyEvernote.BusinessLayer
 
             else
             {
-                layerResult.Result.ProfileImageFilename = "user.jpg";
+                layerResult.Result.ProfileImageFilename = "user.jpg"; 
+                
                 layerResult.Result.ActivateGuid = Guid.NewGuid();
                 if (base.Insert(layerResult.Result) == 0)
                 {

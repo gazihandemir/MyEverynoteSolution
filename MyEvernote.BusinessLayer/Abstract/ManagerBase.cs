@@ -12,43 +12,47 @@ namespace MyEvernote.BusinessLayer.Abstract
 {
     public abstract class ManagerBase<T> : IDataAccess<T> where T : class
     {
+        // Controllerdaki açacağımız managerleri her seferinde ayrı ayrı delete,find gibi
+        // veri tabanı kodlarını yazmak yerine ManagerBaseye yazıyoruz ve diğer Managerlerden
+        // referans alıyoruz . Fonksiyonlardan faydalanıyoruz.
+
         private Repository<T> repo = new Repository<T>(); 
-        public virtual int Delete(T obj)
+        public virtual int Delete(T obj) // Silme
         {
             return repo.Delete(obj);
         }
 
-        public virtual T Find(Expression<Func<T, bool>> where)
+        public virtual T Find(Expression<Func<T, bool>> where) // Bulma
         {
             return repo.Find(where);
         }
 
-        public virtual int Insert(T obj)
+        public virtual int Insert(T obj) // Ekleme
         {
             return repo.Insert(obj);
         }
 
-        public virtual List<T> List()
+        public virtual List<T> List() // Listeleme
         {
             return repo.List();
         }
 
-        public virtual List<T> List(Expression<Func<T, bool>> where)
+        public virtual List<T> List(Expression<Func<T, bool>> where) // Listeleme
         {
             return repo.List(where);
         }
 
-        public virtual IQueryable<T> ListQueryable()
+        public virtual IQueryable<T> ListQueryable() // Listeleme
         {
             return repo.ListQueryable();
         }
 
-        public virtual int Save()
+        public virtual int Save() // kaydetme
         {
             return repo.Save();
         }
 
-        public virtual int Update(T obj)
+        public virtual int Update(T obj) // Güncelleme
         {
             return repo.Update(obj);
         }
