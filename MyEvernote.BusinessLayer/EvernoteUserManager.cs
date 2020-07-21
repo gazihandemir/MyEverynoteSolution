@@ -221,7 +221,9 @@ namespace MyEvernote.BusinessLayer
 
         // Method hiding -> new 
         public new BusinessLayerResult<EvernoteUser> Insert(EvernoteUser data)
+            // Insert Metounu kendimize göre düzenliyoruz.
         {
+            // Girdiğimiz isim veya email veri tabanından bulunuyor
             EvernoteUser user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
 
             BusinessLayerResult<EvernoteUser> layerResult = new BusinessLayerResult<EvernoteUser>();
@@ -229,15 +231,15 @@ namespace MyEvernote.BusinessLayer
             if (user != null)
             {
 
-                if (user.UserName == data.UserName)
+                if (user.UserName == data.UserName) // Kullanıcı adı var mı 
                 {
-
+                    // Hata mesajı döndür
                     layerResult.AddError(ErrorMessageCode.UsernameAlreadyExists, "Kullanıcı adı kayıtlı.");
                 }
 
-                if (user.Email == data.Email)
+                if (user.Email == data.Email) // Email var mı 
                 {
-
+                    // Hata mesajı döndür
                     layerResult.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kayıtlı.");
                 }
             }
@@ -259,7 +261,7 @@ namespace MyEvernote.BusinessLayer
 
         public new BusinessLayerResult<EvernoteUser> Update(EvernoteUser data)
         {
-
+            // Kenidimize göre Update düzenliyoruz
             EvernoteUser db_user = Find(x => x.UserName == data.UserName || x.Email == data.Email);
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
             res.Result = data;

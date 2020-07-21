@@ -13,17 +13,20 @@ using MyEvernote.Entities;
 namespace MyEverynote.WebApp.Controllers
 {
     public class CategoryController : Controller
-    { 
-
+    {
+        // Kategori için ayarlanan Controller
+        // Sürekli kullanacağımız için en üst tarafta CategoryManager nesnesi oluşturuyoruz.
         private CategoryManager categoryManager = new CategoryManager();
         public ActionResult Index()
-        {
+        {   // Index Sayfasındaki categorilerin ve özelliklerinin listelenmesi 
             return View(categoryManager.List()); 
         }
 
       
         public ActionResult Details(int? id)
         {
+            // Kategorilerin Details Actionunda Tıklanan kategorinin detayına(id) girmemiz 
+            // Ve özelliklerinin sıralanması
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,7 +41,7 @@ namespace MyEverynote.WebApp.Controllers
 
     
         public ActionResult Create()
-        {
+        { // Create Sayfasının açılması
             return View();
         }
 
@@ -46,27 +49,27 @@ namespace MyEverynote.WebApp.Controllers
    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,CreatedOn,ModifiedOn,ModifiedUserName")] Category category)
+        public ActionResult Create(Category category)
         {
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
             ModelState.Remove("ModifiedUserName");
-            if (ModelState.IsValid)
+            // Kategori oluştururken üstteki değerler otomatik olarak ayarlanıyor.
+            // Fakat sisteme göre hata döndürdügüne için bunları siliyoruz
+            if (ModelState.IsValid) 
             {
-                categoryManager.Insert(category);
+                categoryManager.Insert(category); // Kategoriyi oluştur
                 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index"); // oluşturduktan sonra index sayfasına git
             }
 
-            return View(category);
+            return View(category); 
         }
 
       
         public ActionResult Edit(int? id)
-        {
-            ModelState.Remove("CreatedOn");
-            ModelState.Remove("ModifiedOn");
-            ModelState.Remove("ModifiedUserName");
+        { // Edit sayfasının kategori id'sina göre açılması
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,14 +87,20 @@ namespace MyEverynote.WebApp.Controllers
    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,CreatedOn,ModifiedOn,ModifiedUserName")] Category category)
+        public ActionResult Edit(Category category)
         {
+            // Kategori için edit sayfası
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUserName");
+            // Kategori oluştururken üstteki değerler otomatik olarak ayarlanıyor.
+            // Fakat sisteme göre hata döndürdügüne için bunları siliyoruz
             if (ModelState.IsValid)
             {
-                Category cat = categoryManager.Find(x => x.Id == category.Id);
-                cat.Title = category.Title;
-                cat.Description = category.Description; 
-                categoryManager.Update(cat);
+                Category cat = categoryManager.Find(x => x.Id == category.Id); // kategoriyi buluyoruz
+                cat.Title = category.Title; // başlıgını güncelliyoruz
+                cat.Description = category.Description;  // açıklamasını güncelliyoruz 
+                categoryManager.Update(cat); // Günlliyoruz
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -99,7 +108,7 @@ namespace MyEverynote.WebApp.Controllers
 
    
         public ActionResult Delete(int? id)
-        {
+        { // Silme sayfasının kategorinin ıd'sine göre açılması
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -116,7 +125,7 @@ namespace MyEverynote.WebApp.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
+        {// Kategori bulunup silinir.
             Category category = categoryManager.Find(x => x.Id == id);
             categoryManager.Delete(category);
             return RedirectToAction("Index");
