@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.BusinessLayer.Abstract;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.Models;
 
 namespace MyEverynote.WebApp.Controllers
 {
@@ -19,10 +20,11 @@ namespace MyEverynote.WebApp.Controllers
         private CategoryManager categoryManager = new CategoryManager();
         public ActionResult Index()
         {   // Index Sayfasındaki categorilerin ve özelliklerinin listelenmesi 
-            return View(categoryManager.List()); 
+            return View(categoryManager.List());
+            // return View(CacheHelper.GetCategoriesFromCache()); 
         }
 
-      
+
         public ActionResult Details(int? id)
         {
             // Kategorilerin Details Actionunda Tıklanan kategorinin detayına(id) girmemiz 
@@ -39,14 +41,14 @@ namespace MyEverynote.WebApp.Controllers
             return View(category);
         }
 
-    
+
         public ActionResult Create()
         { // Create Sayfasının açılması
             return View();
         }
 
-    
-   
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
@@ -56,20 +58,20 @@ namespace MyEverynote.WebApp.Controllers
             ModelState.Remove("ModifiedUserName");
             // Kategori oluştururken üstteki değerler otomatik olarak ayarlanıyor.
             // Fakat sisteme göre hata döndürdügüne için bunları siliyoruz
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 categoryManager.Insert(category); // Kategoriyi oluştur
-                
+                CacheHelper.RemoveCategoriesFromCache();
                 return RedirectToAction("Index"); // oluşturduktan sonra index sayfasına git
             }
 
-            return View(category); 
+            return View(category);
         }
 
-      
+
         public ActionResult Edit(int? id)
         { // Edit sayfasının kategori id'sina göre açılması
-           
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,8 +85,8 @@ namespace MyEverynote.WebApp.Controllers
             return View(category);
         }
 
- 
-   
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
@@ -101,12 +103,13 @@ namespace MyEverynote.WebApp.Controllers
                 cat.Title = category.Title; // başlıgını güncelliyoruz
                 cat.Description = category.Description;  // açıklamasını güncelliyoruz 
                 categoryManager.Update(cat); // Günlliyoruz
+                CacheHelper.RemoveCategoriesFromCache();
                 return RedirectToAction("Index");
             }
             return View(category);
         }
 
-   
+
         public ActionResult Delete(int? id)
         { // Silme sayfasının kategorinin ıd'sine göre açılması
             if (id == null)
@@ -128,6 +131,7 @@ namespace MyEverynote.WebApp.Controllers
         {// Kategori bulunup silinir.
             Category category = categoryManager.Find(x => x.Id == id);
             categoryManager.Delete(category);
+            CacheHelper.RemoveCategoriesFromCache();
             return RedirectToAction("Index");
         }
 

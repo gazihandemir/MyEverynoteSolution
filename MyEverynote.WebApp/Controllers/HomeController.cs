@@ -4,6 +4,7 @@ using MyEvernote.BusinessLayer.Results;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
+using MyEverynote.WebApp.Models;
 using MyEverynote.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,10 +31,10 @@ namespace MyEverynote.WebApp.Controllers
               {
                   return View(TempData["mm"] as List<Note>);
               }*/
-            
+
             // Değiştirilme zamanına göre bütün notların listelenmesi
             return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
-                                                                                        // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
+                                                                                                    // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
         }
         public ActionResult ByCategory(int? id)
         {
@@ -42,7 +43,7 @@ namespace MyEverynote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
             }
-           
+
             // Category id bulma
             Category cat = categoryManager.Find(x => x.Id == id.Value);
             // id yoksa hata döndür
@@ -61,7 +62,7 @@ namespace MyEverynote.WebApp.Controllers
                  CategoryManager cm = new CategoryManager();  // cshtml sayfasının içinde bulunan c# kodları
                 List<Category> list = cm.getCategories();
              */
-           
+
             // En Beğenilenler'e tıklanıldıgında notlar begeni sayısına göre sıralansın
             return View("Index", noteManager.ListQueryable().OrderByDescending(x => x.LikeCount).ToList());
         }
@@ -71,11 +72,11 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult ShowProfile()
         {
-            // 
-            EvernoteUser currentUser = Session["login"] as EvernoteUser;
-           
+
+            //   EvernoteUser currentUser = Session["login"] as EvernoteUser;
+
             // Kullanıcının id'sini fonksiyon yardımı ile buluyoruz.
-            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(CurrentSession.User.Id);
             // eğer hata var ise 
             if (res.Errors.Count > 0)
             {
@@ -93,10 +94,10 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult EditProfile()
         {
-            EvernoteUser currentUser = Session["login"] as EvernoteUser;
-            
+            // EvernoteUser currentUser = Session["login"] as EvernoteUser;
+
             // Kullanıcının id'sinden kullanıcıyı buluyoruz.
-            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(CurrentSession.User.Id);
             if (res.Errors.Count > 0)
             {
                 // TODO : Kullanıcıyı bir hata ekranına yönlendirmek gerekiyor..
@@ -128,7 +129,7 @@ namespace MyEverynote.WebApp.Controllers
                     // Kullanıcının profil resmi ismini veritabanına kaydediyoruz.
                     model.ProfileImageFilename = filename;
                 }
-                
+
                 BusinessLayerResult<EvernoteUser> res = evernoteUserManager.UpdateProfile(model);
                 // Eğer hata var ise 
                 if (res.Errors.Count > 0)
@@ -143,7 +144,9 @@ namespace MyEverynote.WebApp.Controllers
                     return View("Error", errorNotifyObj);
                 }
 
-                Session["login"] = res.Result; // Profil güncellendiği için session güncellendi.
+                //    Session["login"] = res.Result; 
+                // Profil güncellendiği için session güncellendi.
+                CurrentSession.Set<EvernoteUser>("login", res.Result);
                 // Eğer işlem başarılı ise ShowProfile sayfasına git
                 return RedirectToAction("ShowProfile");
             }
@@ -151,9 +154,9 @@ namespace MyEverynote.WebApp.Controllers
         }
         public ActionResult DeleteProfile()
         { // Profil silme
-            EvernoteUser currentUser = Session["login"] as EvernoteUser;
-            
-            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RemoveUserById(currentUser.Id);
+          // EvernoteUser currentUser = Session["login"] as EvernoteUser;
+
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RemoveUserById(CurrentSession.User.Id);
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -177,7 +180,7 @@ namespace MyEverynote.WebApp.Controllers
         {
             if (ModelState.IsValid) // Veriler girildiyse ife gir 
             {
-               
+
                 BusinessLayerResult<EvernoteUser> res = evernoteUserManager.LoginUser(model);
                 // Eğer hata varsa ife gir 
                 if (res.Errors.Count > 0)
@@ -194,7 +197,8 @@ namespace MyEverynote.WebApp.Controllers
                     return View(model);
                 }
 
-                Session["login"] = res.Result;          // Session'a kullanıcı bilgi saklama..
+                //   Session["login"] = res.Result;          // Session'a kullanıcı bilgi saklama..
+                CurrentSession.Set<EvernoteUser>("login", res.Result);
                 return RedirectToAction("Index");       // Yönlendirme
 
 
@@ -218,7 +222,7 @@ namespace MyEverynote.WebApp.Controllers
             if (ModelState.IsValid)
             {
 
-              
+
                 BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RegisterUser(model);
                 if (res.Errors.Count > 0)
                 {
@@ -275,7 +279,7 @@ namespace MyEverynote.WebApp.Controllers
         public ActionResult UserActivate(Guid id)
         {
             // Kullanıcı aktivasyonu saglanacak 
-           
+
             BusinessLayerResult<EvernoteUser> res = evernoteUserManager.ActivateUser(id);
             if (res.Errors.Count > 0)
             {
