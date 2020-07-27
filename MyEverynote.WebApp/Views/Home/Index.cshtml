@@ -11,7 +11,7 @@
         <!-- Kategoriler-->
         <div class="col-md-3">
             @Html.Partial("_PartialCategories")
-            
+
         </div>
 
         <div class="col-md-9">
@@ -59,7 +59,7 @@
                                     <a href="#"> @note.Title</a>
                                 </h4>
                                 <h6 class="text-right">
-                                     @note.Owner.UserName <span class="glyphicon glyphicon-user"></span> <br />
+                                    @note.Owner.UserName <span class="glyphicon glyphicon-user"></span> <br />
                                     @note.ModifiedOn.ToString("dd.MM.yy HH:mm") <span class="glyphicon glyphicon-time"></span>
                                 </h6>
 
@@ -70,7 +70,7 @@
                                         @(note.Text.Substring(0, 60) + "...")
                                     </p>
                                     <p class="pull-right">
-                                <a href="#" class="btn btn-default btn-sm" >devamı</a> <span class="glyphicon glyphicon-chevron-right"></span>
+                                        <a href="#" class="btn btn-default btn-sm">devamı</a> <span class="glyphicon glyphicon-chevron-right"></span>
                                     </p>
                                 }
                                 else
@@ -83,7 +83,7 @@
                             <div><hr /></div>
                             <div class="ratings">
                                 <p class="pull-right">
-                                    <button class="btn btn-default btn-sm">
+                                    <button class="btn btn-default btn-sm " data-toggle="modal" data-target="#modal_comment">
                                         <span class="glyphicon glyphicon-comment"></span> Yorumlar
                                     </button>
                                 </p>
@@ -104,3 +104,8 @@
     </div>
 
 </div>
+@section footer{
+    @Html.Partial("_PartialFooter")
+}
+<!--Modal-->
+@Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
