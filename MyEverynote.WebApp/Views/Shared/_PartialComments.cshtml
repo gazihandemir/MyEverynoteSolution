@@ -1,34 +1,40 @@
 ﻿@using MyEvernote.Entities
+@using MyEverynote.WebApp.Models
 @model  List<Comment>
+@{
+    EvernoteUser user = CurrentSession.User;
+}
 
-<div class="media">
-    <div class="media-left media-middle">
-        <div class="media-object">
-            <span class="glyphicon glyphicon-comment"></span>
+@foreach (Comment item in Model)
+{
+    <div class="media">
+        <div class="media-left media-top">
+            <div class="media-object">
+                <span class="glyphicon glyphicon-comment"></span>
+            </div>
+        </div>
+        <div class="media-body">
+            <div>
+                <span class="col-md-10">
+                    @item.Text
+                </span>
+                @if (user != null && user.Id == item.Owner.Id)
+                {
+                    <span class="col-md-2 text-right">
+                        <button type="button" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </span>
+                }
+                <small class="col-md-12 text-right">
+                    <span class="glyphicon glyphicon-time"></span> @item.ModifiedOn&nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="glyphicon glyphicon-user"></span> @item.Owner.UserName &nbsp; &nbsp; &nbsp; &nbsp;
+                </small>
+            </div>
+
         </div>
     </div>
-    <div class="media-body">
-        <div>
-            <h4 class="media-heading">Middle aligned media</h4>
-            <span>
-                Ipsum gravida vel pretium tellus tincidunt integer e
-                u augue augue nunc elit dolor, luctus placerat sceleri
-                sque euismod, iaculis eu lacus nunc mi elit, vehicula ut.
-            </span>
-            <span class="pull-right">
-                <button type="button" class="btn btn-warning btn-xs">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </button>
-                <button type="button" class="btn btn-danger btn-xs">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </span>
-            <br />
-            <small>
-                <span class="glyphicon glyphicon-time"></span> 27.07.2020 13:13:13 &nbsp; &nbsp; &nbsp; &nbsp;
-                <span class="glyphicon glyphicon-user"></span> Gazihan Demir &nbsp; &nbsp; &nbsp; &nbsp;
-            </small>
-        </div>
-
-    </div>
-</div>
+}

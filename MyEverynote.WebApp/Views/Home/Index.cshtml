@@ -83,7 +83,8 @@
                             <div><hr /></div>
                             <div class="ratings">
                                 <p class="pull-right">
-                                    <button class="btn btn-default btn-sm " data-toggle="modal" data-target="#modal_comment">
+                                    <button class="btn btn-default btn-sm " data-toggle="modal"
+                                            data-target="#modal_comment" data-note-id="@note.Id">
                                         <span class="glyphicon glyphicon-comment"></span> Yorumlar
                                     </button>
                                 </p>
@@ -112,7 +113,9 @@
 <script>
     $(function () {
         $('#modal_comment').on('show.bs.modal', function (e) {
-            $('#modal_comment_body').load("/Comment/ShowNoteComments");
+            var btn = $(e.relatedTarget);
+            var noteid = btn.data("note-id");
+            $('#modal_comment_body').load("/Comment/ShowNoteComments/" + noteid);
         });
     });
 </script>
