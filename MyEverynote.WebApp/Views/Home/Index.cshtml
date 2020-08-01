@@ -111,11 +111,14 @@
 <!--Modal-->
 @Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
 <script>
+
+    var modalCommentBodyId = "#modal_comment_body";
+    var noteid = -1;
     $(function () {
         $('#modal_comment').on('show.bs.modal', function (e) {
             var btn = $(e.relatedTarget);
-            var noteid = btn.data("note-id");
-            $('#modal_comment_body').load("/Comment/ShowNoteComments/" + noteid);
+            noteid = btn.data("note-id");
+            $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
         });
     });
 
@@ -130,7 +133,12 @@
                 var btnSpan = button.find("span");
                 btnSpan.removeClass("glyphicon-edit");
                 btnSpan.addClass("glyphicon-ok");
+                $(spanid).focus();
+                $(spanid).addClass("editable");
                 $(spanid).attr("contenteditable", true);
+               
+               
+
             } else {
                 button.data("edit-mode", false);
                 button.removeClass("btn-success");
@@ -138,7 +146,23 @@
                 var btnSpan = button.find("span");
                 btnSpan.removeClass("glyphicon-ok");
                 btnSpan.addClass("glyphicon-edit");
+                $(spanid).removeClass("editable");
                 $(spanid).attr("contenteditable", false);
+                var txt = $(spanid).text();
+                $.ajax({
+                    method :"POST",
+                    url:"/Comment/Edit/" + commentid,
+                    data: { text: txt }
+                }).done(function (data) {
+                    if (data.result) {
+                        // yorumlar partial tekrar yüklenir..
+                        $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
+                    } else {
+                        alert("Yorum Güncellenemedi.");
+                    }
+                }).fail(function () {
+                    alert("Sunucu ile bağlantı kurulamadı.");
+                });
             }
 
         }
