@@ -15,13 +15,14 @@
         </div>
         <div class="media-body">
             <div>
-                <span class="col-md-10">
+                <span class="col-md-10" id="comment_text_@item.Id" contenteditable="false">
                     @item.Text
                 </span>
                 @if (user != null && user.Id == item.Owner.Id)
                 {
                     <span class="col-md-2 text-right">
-                        <button type="button" class="btn btn-warning btn-xs">
+                        <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment
+                            (this, 'edit_clicked',@item.Id,' #comment_text_@item.Id');">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
                         <button type="button" class="btn btn-danger btn-xs">

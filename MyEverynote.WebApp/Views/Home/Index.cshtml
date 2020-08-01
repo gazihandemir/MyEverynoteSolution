@@ -118,4 +118,29 @@
             $('#modal_comment_body').load("/Comment/ShowNoteComments/" + noteid);
         });
     });
+
+    function doComment(btn, e, commentid, spanid) {
+        var button = $(btn);
+        var mode = button.data("edit-mode");
+        if (e == 'edit_clicked') {
+            if (!mode) {
+                button.data("edit-mode", true);
+                button.removeClass("btn-warning");
+                button.addClass("btn-success");
+                var btnSpan = button.find("span");
+                btnSpan.removeClass("glyphicon-edit");
+                btnSpan.addClass("glyphicon-ok");
+                $(spanid).attr("contenteditable", true);
+            } else {
+                button.data("edit-mode", false);
+                button.removeClass("btn-success");
+                button.addClass("btn-warning");
+                var btnSpan = button.find("span");
+                btnSpan.removeClass("glyphicon-ok");
+                btnSpan.addClass("glyphicon-edit");
+                $(spanid).attr("contenteditable", false);
+            }
+
+        }
+    }
 </script>
