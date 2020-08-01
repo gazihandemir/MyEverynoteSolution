@@ -4,6 +4,7 @@
     ViewBag.Title = "Kullanıcılar";
 }
 <link href="~/Content/validation-summary.css" rel="stylesheet" />
+
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
         <h2>Kullanıcılar</h2>
@@ -35,7 +36,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Password)
                 </th>
-             
+
                 <th>
                     @Html.DisplayNameFor(model => model.IsActive)
                 </th>
@@ -75,7 +76,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Password)
                     </td>
-                  
+
                     <td>
                         @Html.DisplayFor(modelItem => item.IsActive)
                     </td>
@@ -99,10 +100,12 @@
                         @Bootstrap.LinkButton("/EvernoteUser/Edit/" + item.Id, "warning", "btn-xs", "Edit", "edit", string.Empty)
                         @Bootstrap.LinkButton("/EvernoteUser/Details/" + item.Id, "info", "btn-xs", "Details", "search", string.Empty)
                         @Bootstrap.LinkButton("/EvernoteUser/Delete/" + item.Id, "danger", "btn-xs", "Delete", "trash", string.Empty)
-                    
+
                     </td>
                 </tr>
+
             }
+
+        </table>
     </div>
 </div>
-        </table>
