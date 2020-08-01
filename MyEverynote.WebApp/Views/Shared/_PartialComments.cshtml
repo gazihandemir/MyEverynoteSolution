@@ -25,7 +25,8 @@
                             (this, 'edit_clicked',@item.Id,'#comment_text_@item.Id');">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
-                        <button type="button" class="btn btn-danger btn-xs">
+                        <button type="button" class="btn btn-danger btn-xs" onclick="doComment
+                            (this, 'delete_clicked',@item.Id);">
                             <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </span>

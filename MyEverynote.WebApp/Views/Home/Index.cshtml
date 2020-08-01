@@ -136,9 +136,6 @@
                 $(spanid).focus();
                 $(spanid).addClass("editable");
                 $(spanid).attr("contenteditable", true);
-               
-               
-
             } else {
                 button.data("edit-mode", false);
                 button.removeClass("btn-success");
@@ -150,8 +147,8 @@
                 $(spanid).attr("contenteditable", false);
                 var txt = $(spanid).text();
                 $.ajax({
-                    method :"POST",
-                    url:"/Comment/Edit/" + commentid,
+                    method: "POST",
+                    url: "/Comment/Edit/" + commentid,
                     data: { text: txt }
                 }).done(function (data) {
                     if (data.result) {
@@ -164,7 +161,24 @@
                     alert("Sunucu ile bağlantı kurulamadı.");
                 });
             }
-
+        }
+        else if (e == "delete_clicked") {
+            var dialog_res = confirm("Yorum silinsin mi ?");
+            if (!dialog_res) return false;
+            $.ajax({
+                method: "GET",
+                url: "/Comment/Delete/" + commentid,
+            }).done(function (data) {
+                if (data.result) {
+                     // yorumlar partial tekrar yüklenir.
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
+                }
+                else {
+                    alert("yorum silinemedi.");
+                }
+            }).fail(function () {
+                alert("sunucu ile bağlantı kurulamadı");
+            });
         }
     }
 </script>

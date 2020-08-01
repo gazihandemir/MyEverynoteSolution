@@ -52,8 +52,29 @@ namespace MyEverynote.WebApp.Controllers
                 {
                     return Json(new { result = true }, JsonRequestBehavior.AllowGet);
                 }
-                    return Json(new { result = false }, JsonRequestBehavior.AllowGet);
-                
+                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Comment comment = commentManager.Find(x => x.Id == id);
+            if (comment == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            else
+            {
+                if (commentManager.Delete(comment) > 0)
+                {
+                    return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+
             }
         }
     }
