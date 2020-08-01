@@ -33,7 +33,7 @@ namespace MyEverynote.WebApp.Controllers
                 .Select(x => x.Note).Include("Category").Include("Owner")
                 .OrderByDescending(x => x.ModifiedOn);
 
-            return View("Index",notes.ToList());
+            return View("Index", notes.ToList());
         }
 
         public ActionResult Details(int? id)
@@ -140,6 +140,44 @@ namespace MyEverynote.WebApp.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult GetLiked(int[] ids)
+        {
+            if (CurrentSession.User != null)
+            {
+                int userid = CurrentSession.User.Id;
+                List<int> likedNoteIds = new List<int>();
+                if(ids != null)
+                {
+                    likedNoteIds = likedManager.
+                        List(x => x.LikedUser.Id == userid && ids.Contains(x.Note.Id))
+                        .Select(x => x.Note.Id).ToList();
+                }
+                else
+                {
+                    likedNoteIds = likedManager
+                        .List(x => x.LikedUser.Id == userid)
+                        .Select(x => x.Note.Id).ToList();
+                }
+                return Json(new { result = likedNoteIds });
+            }
+            else
+            {
+                return Json(new { result = new List<int>() });
+            }
+
+
+            #region YanlisCozum
+            /*   List<int> likedNoteIds = likedManager.List(
+                   x => x.LikedUser.Id == CurrentSession.User.Id && 
+                   ids.Contains(x.Note.Id))
+                   .Select(x => x.Note.Id).ToList();
+
+               return Json(new { result = likedNoteIds });*/
+            #endregion
+
+        }
+
 
     }
 }
