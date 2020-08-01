@@ -40,3 +40,25 @@
         </div>
     </div>
 }
+@if (user != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" id="new_comment_text" class="form-control" placeholder="Yorumunuz" />
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" onclick="doComment
+                            (this, 'new_clicked' ,-1);">
+
+                        <span class="glyphicon glyphicon-send"></span> GÖnder
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+}
