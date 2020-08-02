@@ -78,7 +78,7 @@
                                     <p>@note.Text</p>
                                 }
 
-
+                            
                             </div>
                             <div><hr /></div>
                             <div class="ratings">
@@ -90,7 +90,7 @@
                                 </p>
                                 <p>
                                     <button class="btn btn-default btn-sm" type="button" data-liked="false" data-note-id="@note.Id">
-                                        <span class="glyphicon glyphicon-star-empty"></span>&nbsp;
+                                        <span class="glyphicon glyphicon-star-empty like-star"></span>&nbsp;
                                         <span class="like-count">@note.LikeCount</span>
                                     </button>
                                 </p>
@@ -112,35 +112,5 @@
 }
 <!--Modal-->
 @Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
-
 <script src="~/Scripts/comment.js"></script>
-<script>
-    $(function () {
-        var noteids = [];
-        $("div[data-note-id]").each(function (i, e) {
-            noteids.push($(e).data("note-id"));
-        });
-        //  console.log(noteids);
-        $.ajax({
-            method: "POST",
-            url: "/Note/GetLiked",
-            data: { ids: noteids }
-        }).done(function (data) {
-            if (data.result != null && data.result.length > 0) {
-                for (var i = 0; i < data.result.length; i++) {
-                    var id = data.result[i];
-                    var likedNote = $("div[data-note-id=" + id + "]");
-                    var btn = likedNote.find("button[data-liked]");
-                    var span = btn.find("span.like-star");
-
-                    btn.data("liked", true);
-                    span.removeClass("glyphicon-star-empty");
-                    span.addClass("glyphicon-star");
-                }
-            }
-        }).fail(function () {
-
-
-        });
-    });
-</script>
+<script src="~/Scripts/like.js"></script>

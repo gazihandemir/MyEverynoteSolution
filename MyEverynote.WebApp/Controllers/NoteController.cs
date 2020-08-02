@@ -147,7 +147,7 @@ namespace MyEverynote.WebApp.Controllers
             {
                 int userid = CurrentSession.User.Id;
                 List<int> likedNoteIds = new List<int>();
-                if(ids != null)
+                if (ids != null)
                 {
                     likedNoteIds = likedManager.
                         List(x => x.LikedUser.Id == userid && ids.Contains(x.Note.Id))
@@ -176,6 +176,41 @@ namespace MyEverynote.WebApp.Controllers
                return Json(new { result = likedNoteIds });*/
             #endregion
 
+        }
+        [HttpPost]
+        public ActionResult SetLikeState(int noteid, bool liked)
+        {
+            int res = 0;
+            Liked like = likedManager.Find(x => x.Note.Id == noteid && x.LikedUser.Id == CurrentSession.User.Id);
+            Note note = noteManager.Find(x => x.Id == noteid);
+
+            if (like != null && liked == false)
+            {
+                res = likedManager.Delete(like);
+            }
+            else if (like == null && liked == true)
+            {
+                res = likedManager.Insert(new Liked()
+                {
+                    LikedUser = CurrentSession.User,
+                    Note = note
+                });
+            }
+            if (res > 0)
+            {
+                if (liked)
+                {
+                    note.LikeCount++;
+                }
+                else
+                {
+                    note.LikeCount--;
+                }
+                res = noteManager.Update(note);
+                return Json(new { hasError = false, errorMessage = string.Empty, result = note.LikeCount });
+
+            }
+            return Json(new { hasError = true, errorMessage = "Begenme işlemi gerçekleştirilemedi.", result = note.LikeCount });
         }
 
 
