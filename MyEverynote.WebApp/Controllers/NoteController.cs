@@ -8,15 +8,18 @@ using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.Filters;
 using MyEverynote.WebApp.Models;
 
 namespace MyEverynote.WebApp.Controllers
 {
+    [Exc]
     public class NoteController : Controller
     {
         private NoteManager noteManager = new NoteManager();
         private CategoryManager categoryManager = new CategoryManager();
         private LikedManager likedManager = new LikedManager();
+        [Auth]
         public ActionResult Index()
         {
             var notes = noteManager.ListQueryable()
@@ -25,6 +28,7 @@ namespace MyEverynote.WebApp.Controllers
                 .OrderByDescending(x => x.ModifiedOn);
             return View(notes.ToList());
         }
+        [Auth]
         public ActionResult MyLikedNotes()
         {
             var notes = likedManager
@@ -35,7 +39,7 @@ namespace MyEverynote.WebApp.Controllers
 
             return View("Index", notes.ToList());
         }
-
+        [Auth]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -50,7 +54,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title");
@@ -60,6 +64,7 @@ namespace MyEverynote.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Auth]
         public ActionResult Create(Note note)
         {
             ModelState.Remove("CreatedOn");
@@ -76,7 +81,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +100,7 @@ namespace MyEverynote.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Auth]
         public ActionResult Edit(Note note)
         {
             ModelState.Remove("CreatedOn");
@@ -115,7 +121,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -133,6 +139,7 @@ namespace MyEverynote.WebApp.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Auth]
         public ActionResult DeleteConfirmed(int id)
         {
             Note note = noteManager.Find(x => x.Id == id);

@@ -9,10 +9,14 @@ using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.BusinessLayer.Abstract;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.Filters;
 using MyEverynote.WebApp.Models;
 
 namespace MyEverynote.WebApp.Controllers
 {
+    [Auth]
+    [AuthAdmin]
+    [Exc]
     public class CategoryController : Controller
     {
         // Kategori için ayarlanan Controller

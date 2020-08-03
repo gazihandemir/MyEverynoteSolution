@@ -9,9 +9,13 @@ using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.BusinessLayer.Results;
 using MyEvernote.Entities;
+using MyEverynote.WebApp.Filters;
 
 namespace MyEverynote.WebApp.Controllers
 {
+    [Auth]
+    [AuthAdmin]
+    [Exc]
     public class EvernoteUserController : Controller
     {
         private EvernoteUserManager evernoteUserManager = new EvernoteUserManager();

@@ -4,6 +4,7 @@ using MyEvernote.BusinessLayer.Results;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
+using MyEverynote.WebApp.Filters;
 using MyEverynote.WebApp.Models;
 using MyEverynote.WebApp.ViewModels;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 
 namespace MyEverynote.WebApp.Controllers
 {
+    [Exc]
     public class HomeController : Controller
     {
         private NoteManager noteManager = new NoteManager();
@@ -22,6 +24,7 @@ namespace MyEverynote.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
+           // throw new Exception("hata oluşturmak");
             // MyEvernote.BusinessLayer.test test = new MyEvernote.BusinessLayer.test();
             //test.InsertTest();
             // test.UpdateTest();
@@ -76,6 +79,7 @@ namespace MyEverynote.WebApp.Controllers
         {
             return View();
         }
+        [Auth]
         public ActionResult ShowProfile()
         {
 
@@ -98,6 +102,7 @@ namespace MyEverynote.WebApp.Controllers
             // Eğer yok ise ShowProfile sayfasını aç ve sonucu yolla
             return View(res.Result);
         }
+        [Auth]
         public ActionResult EditProfile()
         {
             // EvernoteUser currentUser = Session["login"] as EvernoteUser;
@@ -117,6 +122,7 @@ namespace MyEverynote.WebApp.Controllers
             return View(res.Result);
         }
         [HttpPost]
+        [Auth]
         public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
             ModelState.Remove("ModifiedUsername"); //  ModifiedUsername Yoktur hatasını gizlemek için 
@@ -158,6 +164,7 @@ namespace MyEverynote.WebApp.Controllers
             }
             return View(model);
         }
+        [Auth]
         public ActionResult DeleteProfile()
         { // Profil silme
           // EvernoteUser currentUser = Session["login"] as EvernoteUser;
@@ -316,6 +323,14 @@ namespace MyEverynote.WebApp.Controllers
             Session.Clear();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AccessDenied() {
+            return View();
+        }
+        public ActionResult HasError()
+        {
+            return View();
         }
         /*  public ActionResult RegisterOk()
        {
