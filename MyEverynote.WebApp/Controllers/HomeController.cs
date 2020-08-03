@@ -33,8 +33,8 @@ namespace MyEverynote.WebApp.Controllers
               }*/
 
             // Değiştirilme zamanına göre bütün notların listelenmesi
-            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
-                                                                                                    // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
+            return View(noteManager.ListQueryable().Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList()); // c# tarafına bırakıyoruz 
+                                                                                                                                   // return View(nm.getAllNoteQueryable().OrderByDescending(x => x.ModifiedOn).ToList()); // veritabanına bırakıyoruz 
         }
         public ActionResult ByCategory(int? id)
         {
@@ -45,15 +45,21 @@ namespace MyEverynote.WebApp.Controllers
             }
 
             // Category id bulma
-            Category cat = categoryManager.Find(x => x.Id == id.Value);
+       //    Category cat = categoryManager.Find(x => x.Id == id.Value);
             // id yoksa hata döndür
-            if (cat == null)
+      /*     if (cat == null)
             {
                 return HttpNotFound();
                 //return RedirectToAction("Index", "Home");
-            }
+            } */
             // Kategorileri değiştirilme tarihine göre sırala 
-            return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
+           // List<Note> notes = cat.Notes.Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList());
+           List<Note> notes = noteManager.ListQueryable().
+                Where(x => x.IsDraft == false && x.CategoryId == id).
+                OrderByDescending(x => x.ModifiedOn).ToList();
+
+            return View("Index", notes);
+           // return View("Index", cat.Notes.Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult MostLiked()

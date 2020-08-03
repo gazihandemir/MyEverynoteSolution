@@ -212,6 +212,20 @@ namespace MyEverynote.WebApp.Controllers
             }
             return Json(new { hasError = true, errorMessage = "Begenme işlemi gerçekleştirilemedi.", result = note.LikeCount });
         }
+        public ActionResult GetNoteText(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Note note = noteManager.Find(x => x.Id == id);
+            if(note == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_PartialNoteText",note);
+
+        }
 
 
     }

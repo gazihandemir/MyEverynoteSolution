@@ -56,7 +56,8 @@
                             <div class="caption">
 
                                 <h4>
-                                    <a href="#"> @note.Title</a>
+                                    <a href="#" data-target="#modal_notedetail" 
+                                           data-note-id="@note.Id"> @note.Title</a>
                                 </h4>
                                 <h6 class="text-right">
                                     @note.Owner.UserName <span class="glyphicon glyphicon-user"></span> <br />
@@ -70,7 +71,8 @@
                                         @(note.Text.Substring(0, 60) + "...")
                                     </p>
                                     <p class="pull-right">
-                                        <a href="#" class="btn btn-default btn-sm">devamı</a> <span class="glyphicon glyphicon-chevron-right"></span>
+                                        <a href="#" data-toggle="modal" data-target="#modal_notedetail" 
+                                           data-note-id="@note.Id" class="btn btn-default btn-sm">devamı</a> <span class="glyphicon glyphicon-chevron-right"></span>
                                     </p>
                                 }
                                 else
@@ -112,5 +114,7 @@
 }
 <!--Modal-->
 @Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
+@Bootstrap.ModalPopup(id: "modal_notedetail", title: "Notun Devamı")
 <script src="~/Scripts/comment.js"></script>
 <script src="~/Scripts/like.js"></script>
+<script src="~/Scripts/noteDetailPopup.js"></script>
