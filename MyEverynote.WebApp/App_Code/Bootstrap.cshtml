@@ -2,14 +2,14 @@
     string addtionalClass = "", string title = "", string icon = "", string text = "")
 {
     <a href="@url" class="btn btn-@color @addtionalClass" title="@title">
-        <span class="glyphicon glyphicon-@icon"></span> @text <!--Edit-->
+        <span class="fa fa-@icon"></span> @text <!--Edit-->
     </a>
 }
 @helper LinkButton(string url = "", string color = "",
     string addtionalClass = "", string title = "", string icon = "", string text = "")
 {
     <a href="@url" class="btn btn-@color @addtionalClass" title="@title">
-        <span class="glyphicon glyphicon-@icon"></span> @text <!--Edit-->
+        <span class="fa fa-@icon"></span> @text <!--Edit-->
     </a>
 }
 
@@ -18,22 +18,34 @@
 {
 
     <button id="@id" type="@typ" class="btn btn-@color @addtionalClass">
-        <span class="glyphicon glyphicon-@icon"></span> @text <!--Edit-->
+        <span class="fa fa-@icon"></span> @text <!--Edit-->
     </button>
 }
 @helper Button(string color = "",
     string addtionalClass = "", string typ = "button", string icon = "", string text = "")
 {
     <button type="@typ" class="btn btn-@color @addtionalClass">
-        <span class="glyphicon glyphicon-@icon"></span> @text <!--Edit-->
+        <span class="fa fa-@icon"></span> @text <!--Edit-->
     </button>
 }
 @helper LinkMenu(string url = "", string icon = "", string text = "")
 {
-    <a href="@url">
-        <span class="glyphicon glyphicon-@icon">
+    <a class="nav-link" href="@url">
+        <span class="fa fa-@icon">
         </span> @text
     </a>
+}
+@helper DropdownLinkMenu(string url = "", string icon = "", string text = "")
+{
+
+    <a class="dropdown-item" href="@url">
+        <span class="fa fa-@icon">
+        </span> @text
+    </a>
+}
+@helper DropdownDivider()
+{
+    <div class="dropdown-divider"></div>
 }
 @helper ModalPopup(string id = "myModal", string title = "Modal Title", bool showCloseButton = true)
 {
@@ -48,7 +60,7 @@
                     <h4 class="modal-title" id="@(id + "_label")">@title</h4>
                 </div>
                 <div class="modal-body" id="@(id + "_body")">
-                   
+
                 </div>
                 <div class="modal-footer" id="@(id + "_footer")">
                     @if (showCloseButton == true)

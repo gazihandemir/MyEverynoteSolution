@@ -10,7 +10,7 @@
     <div class="media">
         <div class="media-left media-top">
             <div class="media-object">
-                <span class="glyphicon glyphicon-comment"></span>
+                <span class="fa fa-comment"></span>
             </div>
         </div>
         <div class="media-body">
@@ -23,17 +23,17 @@
                     <span class="col-md-2 text-right">
                         <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment
                             (this, 'edit_clicked',@item.Id,'#comment_text_@item.Id');">
-                            <span class="glyphicon glyphicon-edit"></span>
+                            <span class="fa fa-edit"></span>
                         </button>
                         <button type="button" class="btn btn-danger btn-xs" onclick="doComment
                             (this, 'delete_clicked',@item.Id);">
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <span class="fa fa-trash"></span>
                         </button>
                     </span>
                 }
                 <small class="col-md-12 text-right">
-                    <span class="glyphicon glyphicon-time"></span> @item.ModifiedOn&nbsp; &nbsp; &nbsp; &nbsp;
-                    <span class="glyphicon glyphicon-user"></span> @item.Owner.UserName &nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="fa fa-time"></span> @item.ModifiedOn&nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="fa fa-user"></span> @item.Owner.UserName &nbsp; &nbsp; &nbsp; &nbsp;
                 </small>
             </div>
 
@@ -55,7 +55,7 @@
                     <button class="btn btn-success" type="button" onclick="doComment
                             (this, 'new_clicked' ,-1);">
 
-                        <span class="glyphicon glyphicon-send"></span> GÖnder
+                        <span class="fa fa-send"></span> GÖnder
                     </button>
                 </span>
             </div>

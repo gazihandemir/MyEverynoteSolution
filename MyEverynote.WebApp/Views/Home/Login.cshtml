@@ -21,11 +21,11 @@
                                     <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
                                 }
                                 <div class="form-group">
-                                    <label for="username" class="text-info"><span class="glyphicon glyphicon-user"></span> Kullanıcı Adı</label><br>
+                                    <label for="username" class="text-info"><span class="fa fa-user"></span> Kullanıcı Adı</label><br>
                                     @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="text-info"><span class="glyphicon glyphicon-lock">  </span> Şifre</label><br>
+                                    <label for="password" class="text-info"><span class="fa fa-lock">  </span> Şifre</label><br>
                                     @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password" })
                                 </div>
                                 <div class="form-group">
