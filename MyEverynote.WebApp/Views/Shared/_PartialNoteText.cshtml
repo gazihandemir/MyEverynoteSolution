@@ -2,25 +2,22 @@
 @using MyEvernote.Entities
 @model Note
 
-<div class="row">
-    <div class="col-md-12">
-        <h3 class="text-center">
-            @Model.Title
-        </h3>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>
+                @Model.Title
+            </h4>
+        </div>
+        <div class="col-md-12">
+            <p class="text-justify">
+                @Model.Text
+            </p>
+        </div>
+        <div class="col-md-12 text-right mb-2">
+            <small class="text-muted">
+                <i class="fa fa-user mr-1"></i> <span class="mr-4">@Model.Owner.UserName</span>
+                <i class="fa fa-clock-o mr-1"></i> <span>@Model.Owner.ModifiedOn</span>
+            </small>
+        </div>
+
     </div>
-    <div class="col-md-12">
-        <hr />
-    </div>
-    <div class="col-md-12 text-right">
-        <span class="fa fa-user"></span> @Model.Owner.UserName <br />
-        <span class="fa fa-time"></span> @Model.Owner.ModifiedOn <br />
-    </div>
-    <div class="col-md-12">
-        <hr />
-    </div>
-    <div class="col-md-12">
-        <p class="text-justify">
-            @Model.Text
-        </p>
-    </div>
-</div>

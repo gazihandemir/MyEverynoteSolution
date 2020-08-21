@@ -10,33 +10,42 @@
     <div class="media">
         <div class="media-left media-top">
             <div class="media-object">
-                <span class="fa fa-comment"></span>
+                @* <i class="fa fa-comment-o"></i>*@
+                <img src="~/Images/user.jpg" width="30" height="30" class="rounded-circle img-thumbnail" />
             </div>
         </div>
         <div class="media-body">
-            <div>
-                <span class="col-md-10" id="comment_text_@item.Id" contenteditable="false">
-                    @item.Text
-                </span>
-                @if (user != null && user.Id == item.Owner.Id)
-                {
-                    <span class="col-md-2 text-right">
-                        <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-8">
+                        <small class="text-muted ml-2">
+                            <span>@item.Owner.UserName</span>
+                            <span class="mx-2">-</span>
+                            <span>@item.ModifiedOn</span>
+                        </small>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        @if (user != null && user.Id == item.Owner.Id)
+                        {
+                            <button type="button" class="btn btn-light btn-sm" data-edit-mode="false" onclick="doComment
                             (this, 'edit_clicked',@item.Id,'#comment_text_@item.Id');">
-                            <span class="fa fa-edit"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-xs" onclick="doComment
+                                <i class="fa fa-edit text-warning"></i>
+                            </button>
+                            <button type="button" class="btn btn-light btn-sm" onclick="doComment
                             (this, 'delete_clicked',@item.Id);">
-                            <span class="fa fa-trash"></span>
-                        </button>
+                                <i class="fa fa-trash text-danger"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <span id="comment_text_@item.Id" contenteditable="false">
+                        <i class="fa fa-comment-o mr-2"></i>
+                        @item.Text
                     </span>
-                }
-                <small class="col-md-12 text-right">
-                    <span class="fa fa-time"></span> @item.ModifiedOn&nbsp; &nbsp; &nbsp; &nbsp;
-                    <span class="fa fa-user"></span> @item.Owner.UserName &nbsp; &nbsp; &nbsp; &nbsp;
-                </small>
+                </div>
             </div>
-
+          
         </div>
     </div>
 }
@@ -54,8 +63,7 @@
                 <span class="input-group-btn">
                     <button class="btn btn-success" type="button" onclick="doComment
                             (this, 'new_clicked' ,-1);">
-
-                        <span class="fa fa-send"></span> GÖnder
+                        <span class="fa fa-send mr-2"></span>Gönder
                     </button>
                 </span>
             </div>

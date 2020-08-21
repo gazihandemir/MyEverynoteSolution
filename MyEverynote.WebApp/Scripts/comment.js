@@ -15,21 +15,27 @@ function doComment(btn, e, commentid, spanid) {
     if (e == 'edit_clicked') {
         if (!mode) {
             button.data("edit-mode", true);
-            button.removeClass("btn-warning");
-            button.addClass("btn-success");
-            var btnSpan = button.find("span");
-            btnSpan.removeClass("glyphicon-edit");
-            btnSpan.addClass("glyphicon-ok");
+            // button.removeClass("btn-warning");
+            // button.addClass("btn-success");
+            var btnSpan = button.find("i");
+            btnSpan.removeClass("fa-edit");
+            btnSpan.addClass("fa-check");
+            btnSpan.removeClass("text-warning");
+            btnSpan.addClass("text-success");
+
             $(spanid).focus();
             $(spanid).addClass("editable");
             $(spanid).attr("contenteditable", true);
         } else {
             button.data("edit-mode", false);
-            button.removeClass("btn-success");
-            button.addClass("btn-warning");
-            var btnSpan = button.find("span");
-            btnSpan.removeClass("glyphicon-ok");
-            btnSpan.addClass("glyphicon-edit");
+            //button.removeClass("btn-success");
+           // button.addClass("btn-warning");
+            var btnSpan = button.find("i");
+            btnSpan.removeClass("fa-check");
+            btnSpan.addClass("fa-edit");
+            btnSpan.removeClass("text-success");
+            btnSpan.addClass("text-warning");
+
             $(spanid).removeClass("editable");
             $(spanid).attr("contenteditable", false);
             var txt = $(spanid).text();
