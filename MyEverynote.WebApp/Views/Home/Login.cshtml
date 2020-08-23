@@ -1,12 +1,9 @@
-﻿
-@using MyEvernote.Entities.ValueObjects
+﻿@using MyEvernote.Entities.ValueObjects
 @model LoginViewModel
 @{
     ViewBag.Title = "MyEvernote-Giriş Sayfası";
 }
-
 @*
-
     <link href="~/Content/validation-summary.css" rel="stylesheet" />
     @using (Html.BeginForm())
     {
@@ -43,37 +40,43 @@
             </div>
         </body>
     }
-
     </div>
 *@
 <link href="~/Content/new-login-style.css" rel="stylesheet" />
 <style>
-    .vertical-strech{
-        height : 92.3vh;
-
+    .vertical-strech {
+        height: 92.3vh;
     }
 </style>
 <div class="row mr-0">
-    <div class="col-md-12 p-0" >
+    <div class="col-md-12 p-0">
         <section class="login-block p-4 vertical-strech">
             <div class="row">
                 <div class="col-md-4 login-sec">
-                    <h2 class="text-center">Login Now</h2>
-                    <form class="login-form">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1" class="text-uppercase">Username</label>
-                            <input type="text" class="form-control" placeholder="">
-
+                    <h2 class="text-center">Giriş</h2>
+                    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "login-form" }))
+                    {
+                <div class="form-group">
+                    <div class="col-md-10 offset-1">
+                        @Html.ValidationSummary(false)
+                    </div>
+                </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            @Html.TextBoxFor(model => model.Username, new { placeholder = "lütfen kullanıcı adınızı giriniz", @class = "form-control" })
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                            <input type="password" class="form-control" placeholder="">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            @Html.PasswordFor(model => model.Password, new { placeholder = "lütfen şifrenizi giriniz", @class = "form-control" })
                         </div>
                         <div class="form-check">
-                            <button type="submit" class="btn btn-login float-right">Submit</button>
+                            <button type="submit" class="btn btn-login float-right">Giriş</button>
                         </div>
-
-                    </form>
+                    }
                 </div>
                 <div class="col-md-8 banner-sec">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
