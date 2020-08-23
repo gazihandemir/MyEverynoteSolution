@@ -1,42 +1,119 @@
-﻿@using MyEvernote.Entities.ValueObjects
+﻿
+@using MyEvernote.Entities.ValueObjects
 @model LoginViewModel
 @{
     ViewBag.Title = "MyEvernote-Giriş Sayfası";
 }
-<link href="~/Content/validation-summary.css" rel="stylesheet" />
-@using (Html.BeginForm())
-{
-    <body>
-        <div id="login">
 
-            <div class="container">
-                <div id="login-row" class="row justify-content-center align-items-center">
-                    <div id="login-column" class="col-md-6">
-                        <div id="login-box" class="col-md-12">
-                            <form id="login-form" class="form" action="" method="post">
-                                <h3 class="text-center text-info">GİRİŞ YAP</h3>
-                                <hr /> <br />@Html.ValidationSummary(false) <br /><hr />
-                                @if (ViewBag.SetLink != null)
-                                {
-                                    <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
-                                }
-                                <div class="form-group">
-                                    <label for="username" class="text-info"><span class="fa fa-user"></span> Kullanıcı Adı</label><br>
-                                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="text-info"><span class="fa fa-lock">  </span> Şifre</label><br>
-                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password" })
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-info btn-sm">Giriş Yap</button>
-                                </div>
-                            </form>
+@*
+
+    <link href="~/Content/validation-summary.css" rel="stylesheet" />
+    @using (Html.BeginForm())
+    {
+        <body>
+            <div id="login">
+
+                <div class="container">
+                    <div id="login-row" class="row justify-content-center align-items-center">
+                        <div id="login-column" class="col-md-6">
+                            <div id="login-box" class="col-md-12">
+                                <form id="login-form" class="form" action="" method="post">
+                                    <h3 class="text-center text-info">GİRİŞ YAP</h3>
+                                    <hr /> <br />@Html.ValidationSummary(false) <br /><hr />
+                                    @if (ViewBag.SetLink != null)
+                                    {
+                                        <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
+                                    }
+                                    <div class="form-group">
+                                        <label for="username" class="text-info"><span class="fa fa-user"></span> Kullanıcı Adı</label><br>
+                                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="text-info"><span class="fa fa-lock">  </span> Şifre</label><br>
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password" })
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-info btn-sm">Giriş Yap</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </body>
-}
+        </body>
+    }
 
+    </div>
+*@
+<link href="~/Content/new-login-style.css" rel="stylesheet" />
+<style>
+    .vertical-strech{
+        height : 92.3vh;
+
+    }
+</style>
+<div class="row mr-0">
+    <div class="col-md-12 p-0" >
+        <section class="login-block p-4 vertical-strech">
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">Login Now</h2>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+                            <input type="text" class="form-control" placeholder="">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                            <input type="password" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-check">
+                            <button type="submit" class="btn btn-login float-right">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-md-8 banner-sec">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active">
+                                <img class="d-block img-fluid" src="https://picsum.photos/980/600?random=1" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <div class="banner-text">
+                                        <h2>This is Heaven</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block img-fluid" src="https://picsum.photos/980/600?random=2" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <div class="banner-text">
+                                        <h2>This is Heaven</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block img-fluid" src="https://picsum.photos/980/600?random=3" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <div class="banner-text">
+                                        <h2>This is Heaven</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
