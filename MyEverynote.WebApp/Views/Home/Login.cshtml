@@ -42,6 +42,7 @@
     }
     </div>
 *@
+    <link href="~/Content/validation-summary.css" rel="stylesheet" />
 <link href="~/Content/new-login-style.css" rel="stylesheet" />
 <style>
     .vertical-strech {
@@ -56,11 +57,7 @@
                     <h2 class="text-center">Giriş</h2>
                     @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "login-form" }))
                     {
-                <div class="form-group">
-                    <div class="col-md-10 offset-1">
-                        @Html.ValidationSummary(false)
-                    </div>
-                </div>
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -75,6 +72,12 @@
                         </div>
                         <div class="form-check">
                             <button type="submit" class="btn btn-login float-right">Giriş</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group mt-4">
+                            <div class="col-md-12">
+                                @Html.ValidationSummary(false)
+                            </div>
                         </div>
                     }
                 </div>
