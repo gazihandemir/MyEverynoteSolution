@@ -4,23 +4,27 @@
     ViewBag.Title = "Profiliniz";
 }
 
-<div class="container">
-    <div class="row">
-        <h1 class="text-center"><b>@ViewBag.Title</b></h1>
-        <hr />
+
+<div class="row pl-5 pt-5" >
+    <div class="col-md-12">
+        <p class="display-4 border-bottom">
+            <b> Kullanıcı Hesabı</b>
+        </p>
     </div>
-    <div class="row">
-        <div class="col-md-2">
-            <img src="~/Images/@Model.ProfileImageFilename" class="img-circle" width="128" height="128" />
-        </div>
-        <div class="col-md-10">
-            <h3>@(Model.Name + " "+ Model.Surname)</h3>
-            <br />
-            <h5><b>@Html.DisplayFor(model => model.UserName) : </b>@Model.UserName</h5>
-            <h5><b>@Html.DisplayFor(model => model.Email) : </b>@Model.Email</h5>
-            <br />
-            <h5><a href="#">More...</a></h5>
-        </div>
- 
+</div>
+
+<div class="row p-5">
+    <div class="col-md-2">
+        <img src="~/Images/@Model.ProfileImageFilename" class="rounded-circle img-thumbnail" width="256" height="256" />
     </div>
+    <div class="col-md-10 mb-4">
+        <h3>@(Model.Name + " "+ Model.Surname)</h3>
+      
+        <p>
+            <b>@Html.DisplayNameFor(model => model.UserName) : </b>@Model.UserName  <br />
+            <b>@Html.DisplayNameFor(model => model.Email) : </b>@Model.Email
+        </p>
+        <br />
+    </div>
+
 </div>
