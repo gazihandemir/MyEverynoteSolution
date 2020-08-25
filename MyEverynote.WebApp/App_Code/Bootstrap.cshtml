@@ -2,14 +2,14 @@
     string addtionalClass = "", string title = "", string icon = "", string text = "")
 {
     <a href="@url" class="btn btn-@color @addtionalClass" title="@title">
-        <i class="fa fa-@icon mr-2"></i>@text <!--Edit-->
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")"></i>@text <!--Edit-->
     </a>
 }
 @helper LinkButton(string url = "", string color = "",
     string addtionalClass = "", string title = "", string icon = "", string text = "")
 {
     <a href="@url" class="btn btn-@color @addtionalClass" title="@title">
-        <i class="fa fa-@icon mr-2"></i>@text <!--Edit-->
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")"></i>@text <!--Edit-->
     </a>
 }
 
@@ -18,20 +18,20 @@
 {
 
     <button id="@id" type="@typ" class="btn btn-@color @addtionalClass">
-        <i class="fa fa-@icon mr-2"></i>@text <!--Edit-->
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")"></i>@text <!--Edit-->
     </button>
 }
 @helper Button(string color = "",
     string addtionalClass = "", string typ = "button", string icon = "", string text = "")
 {
     <button type="@typ" class="btn btn-@color @addtionalClass">
-        <i class="fa fa-@icon mr-2"></i>@text <!--Edit-->
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")"></i>@text <!--Edit-->
     </button>
 }
 @helper LinkMenu(string url = "", string icon = "", string text = "")
 {
     <a class="nav-link" href="@url">
-        <i class="fa fa-@icon mr-2">
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")">
         </i>@text
     </a>
 }
@@ -39,7 +39,7 @@
 {
 
     <a class="dropdown-item" href="@url">
-        <i class="fa fa-@icon mr-2">
+        <i class="fa fa-@icon @(string.IsNullOrEmpty(text) ? "" :"mr-2")">
         </i>@text
     </a>
 }

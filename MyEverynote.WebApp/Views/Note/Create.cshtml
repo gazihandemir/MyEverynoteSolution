@@ -1,62 +1,66 @@
 ﻿@model MyEvernote.Entities.Note
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Not Ekle";
 }
 <link href="~/Content/validation-summary.css" rel="stylesheet" />
-<div class="=row">
-    <div class="col-md-8 col-md-offset-2">
-        <h2>Create</h2>
-        <hr />
+<div class="row pl-5 pt-3 mr-0">
+    <div class="col-md-12">
+        <p class="display-4 border-bottom">
+            @ViewBag.Title
+        </p>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
+
+<div class="row pl-5 mr-0">
+    <div class="col-md-10">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <h4>Note</h4>
-                <hr />
-                @Html.ValidationSummary(false)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Text, 5, 30, new { @class = "form-control" })
-                    </div>
+            <div class=" form-group row">
+                <div class="col-md-12 pr-0">
+                    @Html.ValidationSummary(false)
                 </div>
+            </div>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-form-label font-weight-bold col-md-2" })
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsDraft, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.IsDraft)
-                        </div>
-                    </div>
-                </div>
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control col-md-10" } })
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CategoryId, "Kategori", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Bootstrap.Button("success", string.Empty, "submit", "plus", " Create")
-                        @Bootstrap.LinkButton("/Note/Index", "default", string.Empty,
-                  string.Empty, "arrow-left", " Back to List")
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "col-form-label font-weight-bold col-md-2" })
+
+                @Html.TextAreaFor(model => model.Text, 5, 30, new { @class = "form-control col-md-10" })
+
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.IsDraft, htmlAttributes: new { @class = "col-form-label font-weight-bold col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsDraft)
                     </div>
                 </div>
             </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.CategoryId, "Kategori", htmlAttributes: new { @class = "col-form-label font-weight-bold col-md-2" })
+
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control col-md-10" })
+
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12 pr-0 text-right">
+                    @Bootstrap.LinkButton("/Note/Index", "secondary", string.Empty,
+              string.Empty, "arrow-left", "Geri Dön !")
+                    @Bootstrap.Button("success", string.Empty, "submit", "plus", " Create")
+                </div>
+            </div>
+
         }
     </div>
 </div>
