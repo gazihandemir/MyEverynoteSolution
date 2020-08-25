@@ -43,7 +43,15 @@
                     @Html.DisplayNameFor(model => model.IsDraft)
                 </dt>
                 <dd class="col-md-9">
-                    @Html.DisplayFor(model => model.IsDraft)
+                    @if (Model.IsDraft)
+                    {
+                        <i class="fa fa-check text-success"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times text-danger"></i>
+                    }
+                    @*    @Html.DisplayFor(model => model.IsDraft)*@ 
                 </dd>
 
                 <dt class="col-md-3">
