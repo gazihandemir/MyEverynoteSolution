@@ -1,81 +1,81 @@
 ﻿@model MyEvernote.Entities.Category
 @using MyEverynote.WebApp
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Kategori Detayı";
 }
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <h2>Details</h2>
+<<div class="row pl-5 pt-3 mr-0">
+    <div class="col-md-12">
+        <p class="display-4 border-bottom">
+            @ViewBag.Title
+        </p>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div>
-            <h4>Category</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Title)
-                </dt>
+ <div class="row pl-3 mr-0">
+     <div class="col-md-10">
+         <div>
+             <dl class="row">
+                 <dt class="col-md-3">
+                     @Html.DisplayNameFor(model => model.Title)
+                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
-                </dd>
+                 <dd class="col-md-9">
+                     @Html.DisplayFor(model => model.Title)
+                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
+                 <dt class="col-md-3">
+                     @Html.DisplayNameFor(model => model.Description)
+                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
+                 <dd class="col-md-9">
+                     @Html.DisplayFor(model => model.Description)
+                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreatedOn)
-                </dt>
+                 <dt class="col-md-3">
+                     @Html.DisplayNameFor(model => model.CreatedOn)
+                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.CreatedOn)
-                </dd>
+                 <dd class="col-md-9">
+                     @Html.DisplayFor(model => model.CreatedOn)
+                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ModifiedOn)
-                </dt>
+                 <dt class="col-md-3">
+                     @Html.DisplayNameFor(model => model.ModifiedOn)
+                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ModifiedOn)
-                </dd>
+                 <dd class="col-md-9">
+                     @Html.DisplayFor(model => model.ModifiedOn)
+                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ModifiedUserName)
-                </dt>
+                 <dt class="col-md-3">
+                     @Html.DisplayNameFor(model => model.ModifiedUserName)
+                 </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ModifiedUserName)
-                </dd>
+                 <dd class="col-md-9">
+                     @Html.DisplayFor(model => model.ModifiedUserName)
+                 </dd>
 
-            </dl>
-        </div>
-    </div>
-    <div class="col-md-8 col-md-offset-2">
-        <p>
-            <!--    <a href="/Category/Edit/@Model.Id" class="btn btn-warning">
+             </dl>
+         </div>
+     </div>
+     <div class="col-md-10 pl-3">
+         <p>
+             @Bootstrap.LinkButton("/Category/Index", "secondary", string.Empty,
+             string.Empty, "arrow-left", "Geri Dön!")
+             @Bootstrap.LinkButton("/Category/Edit/" + Model.Id, "warning", string.Empty,
+          string.Empty, "edit", " Edit")
+             <!--    <a href="/Category/Edit/@Model.Id" class="btn btn-warning">
          <span class="fa fa-edit"></span> Edit
      </a>
      <a href="/Category/Index" class="btn btn-default ">
          <span class="fa fa-arrow-left"></span> Back to List
      </a>
     -->
-            @Bootstrap.LinkButton("/Category/Edit/" + Model.Id, "warning", string.Empty,
-            string.Empty, "edit", " Edit")
-            @Bootstrap.LinkButton("/Category/Index", "default", string.Empty,
-            string.Empty, "arrow-left", " Back to List")
-            <!--
+             <!--
          Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
      Html.ActionLink("Back to List", "Index")
     -->
-        </p>
-    </div>
-</div>
+         </p>
+     </div>
+ </div>
 
 

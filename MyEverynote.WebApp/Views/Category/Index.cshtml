@@ -3,20 +3,19 @@
 @{
     ViewBag.Title = "Kategoriler";
 }
-<div class="row">
-    <div class="col-md-10 col-md-offset-1">
-        <h2>Kategoriler</h2>
+<div class="row pl-5 pt-3 mr-0">
+    <div class="col-md-12">
+        <p class="display-4 border-bottom">
+            @ViewBag.Title
+        </p>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-10 col-md-offset-1">
+<div class="row pl-5 mr-0">
+    <div class="col-md-12">
         <p>
-            <!-- Html.ActionLink("Create New", "Create")-->
-            <a href="/Category/Create" class="btn btn-primary">
-                <span class="fa fa-plus"></span> Create
-            </a>
+            @Bootstrap.LinkButton("/Category/Create", "primary", "btn-sm", string.Empty, "plus", "Yeni Kategori Ekle")
         </p>
-        <table class="table">
+        <table class="table table-hover table-striped table-sm small">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Title)
@@ -54,15 +53,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ModifiedUserName)
                     </td>
-                    <td>
-                        @Bootstrap.LinkButton("/Category/Edit/"+item.Id, "warning", "btn-xs", "Edit", "edit", string.Empty)
-                        @Bootstrap.LinkButton("/Category/Details/" + item.Id, "info", "btn-xs", "Details", "search", string.Empty)
-                        @Bootstrap.LinkButton("/Category/Delete/" + item.Id, "danger", "btn-xs", "Delete", "trash", string.Empty)
+                    <td width="150" class="text-right">
+                        @Bootstrap.LinkButton("/Category/Edit/" + item.Id, "warning", "btn-sm", "Edit", "edit", string.Empty)
+                        @Bootstrap.LinkButton("/Category/Details/" + item.Id, "info", "btn-sm", "Details", "search", string.Empty)
+                        @Bootstrap.LinkButton("/Category/Delete/" + item.Id, "danger", "btn-sm", "Delete", "trash", string.Empty)
                         <!--
-                        Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                         -->
+                Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                 -->
                     </td>
                 </tr>
             }

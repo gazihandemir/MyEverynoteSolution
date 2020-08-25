@@ -307,6 +307,7 @@
     <Content Include="Views\Home\HasError.cshtml" />
     <Content Include="Views\Shared\_PartialNavbar.cshtml" />
     <Content Include="Views\Home\_PartialCarousel.cshtml" />
+    <Content Include="Views\Note\MyLikedNotes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

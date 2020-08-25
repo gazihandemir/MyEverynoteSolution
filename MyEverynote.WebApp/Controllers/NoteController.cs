@@ -37,7 +37,7 @@ namespace MyEverynote.WebApp.Controllers
                 .Select(x => x.Note).Include("Category").Include("Owner")
                 .OrderByDescending(x => x.ModifiedOn);
 
-            return View("Index", notes.ToList());
+            return View(notes.ToList());
         }
         [Auth]
         public ActionResult Details(int? id)

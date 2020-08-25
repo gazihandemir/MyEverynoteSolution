@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <p class="display-4 border-bottom">
             @ViewBag.Title
-            <h3>Are you sure you want to delete this?</h3>
+     
         </p>
     </div>
 </div>
@@ -83,16 +83,17 @@
         </div>
     </div>
     <div class="col-md-10 pl-3 text-left">
+        <h3><b>Silmek istediğinize Emin misiniz ? </b></h3>
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            @Bootstrap.LinkButton("/Note/Delete", "secondary", string.Empty,
- string.Empty, "arrow-left", "Geri Dön!")
-            @Bootstrap.Button("danger", string.Empty, "submit", "trash", "Sil")
+            <div class="form-actions no-color">
+                @Bootstrap.LinkButton("/Note/Delete", "secondary", string.Empty,
+     string.Empty, "arrow-left", "Geri Dön!")
+                @Bootstrap.Button("danger", string.Empty, "submit", "trash", "Sil")
 
-        </div>
+            </div>
         }
     </div>
 </div>
